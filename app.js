@@ -24,6 +24,9 @@ function blankInvoice() {
     // Becomes true once you pick a due date yourself. Until then the due date
     // moves along when you change the invoice date.
     dueDateChanged: false,
+    // The number shown at the top. Becomes yours once you type in it.
+    number: "",
+    numberChanged: false,
     currency: "KM",
     lines: [newLine()],
     paid: false,
@@ -239,11 +242,29 @@ function nextNumber(date) {
   return numberText(year, lastNumberIn(year, loadInvoices(), loadLastNumbers()) + 1);
 }
 
-// Show the number this invoice will get when you save it.
-// An invoice being edited keeps its own number.
+// Show the number this invoice will get when you save it: the next free number,
+// or the invoice's own number when editing. Once you've typed a number
+// yourself, it stays as you typed it.
 function showNextNumber() {
-  document.getElementById("invoice-number").textContent =
-    t("invoiceNumber", { number: invoice.editing || nextNumber(invoice.date) });
+  if (!invoice.numberChanged) {
+    invoice.number = invoice.editing || nextNumber(invoice.date);
+  }
+  document.getElementById("invoice-number").value = invoice.number;
+}
+
+// What's wrong with the number in the form, as a text key, or "" if it's fine.
+// It must look like 2026-046, and no other invoice may have it.
+function numberProblem(number, invoices) {
+  if (!/^\d{4}-\d{3,}$/.test(number)) return "numberFormat";
+  if (invoices.some((saved) => saved.number === number && saved.number !== invoice.editing)) return "numberTaken";
+  return "";
+}
+
+function showNumberProblem(key, number) {
+  const error = document.getElementById("number-error");
+  error.hidden = !key;
+  if (key) error.textContent = t(key, { number });
+  document.getElementById("invoice-number").classList.toggle("invalid", Boolean(key));
 }
 
 // Invoices saved before numbers existed get one, in the order they were saved.
@@ -608,6 +629,22 @@ function saveInvoice() {
 
   const invoices = loadInvoices();
   const lastNumbers = loadLastNumbers();
+
+  // The number: the next free one, unless you typed one yourself.
+  if (!invoice.numberChanged) {
+    invoice.number = invoice.editing || nextNumber(invoice.date);
+  }
+  const number = invoice.number.trim();
+  const problem = numberProblem(number, invoices);
+  showNumberProblem(problem, number);
+  if (problem) {
+    showMessage("cantSaveNumber", true);
+    return;
+  }
+  // Numbering goes on after the highest number used, e.g. 2026-046 → 2026-047 next.
+  const [year, count] = numberParts(number);
+  lastNumbers[year] = Math.max(lastNumberIn(year, invoices, lastNumbers), count);
+
   const toSave = {
     client: invoice.client.trim(),
     // The invoice keeps its own copy of the client's details.
@@ -625,24 +662,19 @@ function saveInvoice() {
     })),
   };
 
-  let number;
   let messageKey;
   const editedIndex = invoices.findIndex((saved) => saved.number === invoice.editing);
   if (invoice.editing && editedIndex !== -1) {
-    // An existing invoice keeps its number; the new version replaces the old one.
-    number = invoice.editing;
+    // The new version replaces the old one, with its old or its new number.
     messageKey = "updated";
     invoices[editedIndex] = {
       ...invoices[editedIndex],
       ...toSave,
+      number,
       updatedAt: new Date().toISOString(),
     };
   } else {
     // The number is only used up now, when the invoice is really saved.
-    const year = yearOf(invoice.date);
-    const count = lastNumberIn(year, invoices, lastNumbers) + 1;
-    number = numberText(year, count);
-    lastNumbers[year] = count;
     messageKey = "saved";
     invoices.push({ number, ...toSave, savedAt: new Date().toISOString() });
   }
@@ -683,6 +715,7 @@ function fillForm() {
   document.getElementById("currency").value = invoice.currency;
   document.getElementById("paid").checked = invoice.paid;
   document.getElementById("note").value = invoice.note;
+  showNumberProblem("");
   showNextNumber();
 }
 
@@ -703,6 +736,23 @@ function setUpForm() {
   // Pressing Enter in a field must not save a half-finished invoice.
   document.getElementById("invoice-form").addEventListener("submit", (event) => {
     event.preventDefault();
+  });
+
+  // The invoice number at the top can be typed over.
+  const number = document.getElementById("invoice-number");
+  number.addEventListener("input", () => {
+    invoice.number = number.value;
+    invoice.numberChanged = true;
+    const typed = number.value.trim();
+    showNumberProblem(typed ? numberProblem(typed, loadInvoices()) : "", typed);
+  });
+  // Emptied the field? Then the app picks the number again.
+  number.addEventListener("change", () => {
+    if (number.value.trim() === "") {
+      invoice.numberChanged = false;
+      showNumberProblem("");
+      showNextNumber();
+    }
   });
 
   const clientAddress = document.getElementById("client-address");

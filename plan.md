@@ -131,6 +131,11 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Chosen in Settings, shrunk to at most 400 × 200 pixels, printed top left on every invoice.
   - Included in the backup.
 
+- [x] **24. Change the invoice number**
+  - The number at the top right of the form can be typed over, for new and edited invoices.
+  - Must look like 2026-046 and must not be used by another invoice.
+  - Numbering continues after the highest number used.
+
 ## Maybe later
 - More business details: PDV number, phone, email.
 - A real APK file for Android (e.g. made with PWABuilder), or publishing on Google Play.
