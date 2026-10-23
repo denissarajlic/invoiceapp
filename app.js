@@ -27,6 +27,7 @@ function blankInvoice() {
     currency: "KM",
     lines: [newLine()],
     paid: false,
+    note: "",
   };
 }
 
@@ -305,6 +306,9 @@ function renderInvoiceList() {
     const edit = row.querySelector(".edit");
     edit.textContent = t("edit");
     edit.addEventListener("click", () => editInvoice(saved));
+    const print = row.querySelector(".print");
+    print.textContent = t("print");
+    print.addEventListener("click", () => printInvoice(saved));
     const duplicate = row.querySelector(".duplicate");
     duplicate.textContent = t("duplicate");
     duplicate.addEventListener("click", () => duplicateInvoice(saved));
@@ -403,6 +407,7 @@ function duplicateInvoice(saved) {
   copy.clientAddress = saved.clientAddress || "";
   copy.clientJib = saved.clientJib || "";
   copy.currency = saved.currency;
+  copy.note = saved.note || "";
   copy.lines = saved.lines.map((line) => ({
     description: line.description,
     quantity: String(line.quantity),
@@ -425,6 +430,7 @@ function editInvoice(saved) {
   // The saved due date stays, even if you change the date.
   opened.dueDateChanged = true;
   opened.currency = saved.currency;
+  opened.note = saved.note || "";
   opened.paid = Boolean(saved.paid);
   opened.lines = saved.lines.map((line) => ({
     description: line.description,
@@ -486,6 +492,7 @@ function saveInvoice() {
     dueDate: invoice.dueDate,
     currency: invoice.currency,
     paid: invoice.paid,
+    note: invoice.note.trim(),
     lines: invoice.lines.map((line) => ({
       description: line.description.trim(),
       quantity: numberFrom(line.quantity),
@@ -545,6 +552,7 @@ function fillForm() {
   document.getElementById("due-date").value = invoice.dueDate;
   document.getElementById("currency").value = invoice.currency;
   document.getElementById("paid").checked = invoice.paid;
+  document.getElementById("note").value = invoice.note;
   showNextNumber();
 }
 
@@ -599,6 +607,8 @@ function setUpForm() {
   });
   const paid = document.getElementById("paid");
   paid.addEventListener("change", () => { invoice.paid = paid.checked; });
+  const note = document.getElementById("note");
+  note.addEventListener("input", () => { invoice.note = note.value; });
 
   document.getElementById("add-line").addEventListener("click", () => {
     invoice.lines.push(newLine());

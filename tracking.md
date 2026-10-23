@@ -73,6 +73,23 @@ Last updated: 23 Oct 2026
 - **Invoices keep their own copy** of the client's name, address and JIB. Changing or deleting a client never changes invoices that were already made.
 - Edit and Duplicate also bring back the invoice's address and JIB.
 
+## Note
+- The form has an optional **Note** field (Napomena), e.g. "Please include the invoice number when you pay."
+- It's saved with the invoice and comes back with Edit and Duplicate.
+
+## Print / PDF
+- Each invoice in the list has a **Print** button (Štampaj). It opens the browser's print window.
+- The printout shows only the invoice, with no buttons or menus, on an A4 page:
+  - top right: **Invoice** (Faktura), with the invoice number, date and due date
+  - **Bill to** (Kupac): the client's name, address and JIB, as saved on the invoice
+  - a table of the lines: number, description, quantity, price and amount
+  - amount without VAT, VAT 17% and the total, at the bottom right
+  - the note, if there is one
+- It's printed in the language the app is in at that moment.
+- Quantities are printed Bosnian style too, e.g. `1,5`.
+- A long invoice continues on a second page, and a line is never cut in half.
+- **PDF:** in the print window, choose "Save as PDF" as the printer. On iPhone, use the Share button in the print view.
+
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
 - This is the same in English and in Bosnian.
@@ -123,7 +140,7 @@ Last updated: 23 Oct 2026
 - A newly saved invoice appears at the top of the list straight away.
 - With no saved invoices, it says "No saved invoices yet."
 - On a phone, each invoice shows the number and total on top, then the client on the left with the date and due date on the right. On a wide screen, all of that fits on one row.
-- Under each invoice are its paid/unpaid label and its buttons: **Mark as paid**, **Edit**, **Duplicate** and **Delete**.
+- Under each invoice are its paid/unpaid label and its buttons: **Mark as paid**, **Print**, **Edit**, **Duplicate** and **Delete**.
 
 ## Settings
 - **⚙ Settings** (Postavke) is at the bottom of the page. Tap it to open or close it.
@@ -138,6 +155,8 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
+- The printout doesn't show your own business details yet. The top left of the page is empty.
+- The invoice in the form can't be printed until it's saved. Print is only in the list.
 - Clients can only be added by saving an invoice. There's no "add client" button in the Clients section.
 - An invoice you haven't saved is lost if you reload or close the page.
 - A line with a problem is still counted in the totals on screen until you fix it.

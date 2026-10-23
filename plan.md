@@ -80,7 +80,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Clients can be edited and deleted.
   - Old invoices keep the client details they had when they were made.
 
-- [ ] **14. Print / PDF**
+- [x] **14. Print / PDF**
   - A **Print** button opens a clean printable invoice. "Save as PDF" in the print window makes a PDF.
   - Shows your business details, the client, number, dates, lines and totals.
   - Printed in the language the app is in.
@@ -88,7 +88,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
 
 - [ ] **15. Settings (your business details)**
   - Business name, address, ID number (JIB), bank account.
-  - Entered once and used on every invoice.
+  - Entered once and used on every invoice: they fill the empty top-left corner of the printout from Feature 14.
   - Also holds the `EUR` / `€` choice.
 
 - [ ] **16. Filter by month**

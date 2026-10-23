@@ -71,6 +71,11 @@
       <p id="no-lines" class="empty" data-i18n="noLines" hidden></p>
       <button id="add-line" type="button" class="secondary" data-i18n="addLine">+ Add line</button>
 
+      <label class="note-field">
+        <span data-i18n="note">Note</span>
+        <textarea id="note" rows="2" data-i18n-placeholder="notePlaceholder"></textarea>
+      </label>
+
       <dl class="totals">
         <div>
           <dt data-i18n="withoutVat">Amount without VAT</dt>
@@ -125,6 +130,7 @@
       <span class="row-actions">
         <span class="status"></span>
         <button type="button" class="toggle-paid link"></button>
+        <button type="button" class="print link"></button>
         <button type="button" class="edit link"></button>
         <button type="button" class="duplicate link"></button>
         <button type="button" class="delete link danger"></button>
@@ -154,6 +160,9 @@
       <p class="line-error error" hidden></p>
     </div>
   </template>
+
+  <!-- Only shown when printing. Filled in by print.js. -->
+  <article id="print-area" class="print-area"></article>
 
   <template id="client-row-template">
     <li class="client-row">
@@ -192,6 +201,7 @@
 
   <script src="i18n.js"></script>
   <script src="clients.js"></script>
+  <script src="print.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

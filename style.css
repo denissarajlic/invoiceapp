@@ -70,7 +70,8 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
   width: 100%;
   font: inherit;
   /* 16px stops iPhone from zooming in when you tap a field. */
@@ -83,7 +84,8 @@ select {
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: 2px solid #0969da;
   outline-offset: -1px;
 }
@@ -523,5 +525,164 @@ button.small-primary {
     gap: 4px;
     /* Line the number up with the text in the input fields next to it. */
     padding-bottom: 11px;
+  }
+}
+
+.note-field {
+  margin: 20px 0 0;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ---------- Printing ---------- */
+
+/* The printed invoice is hidden on screen. */
+.print-area {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+
+  /* On paper, only the invoice: no menu, form, list or buttons. */
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  body > *:not(.print-area) {
+    display: none !important;
+  }
+
+  .print-area {
+    display: block;
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  .print-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .print-seller-name {
+    font-size: 13pt;
+    font-weight: 700;
+  }
+
+  .print-heading {
+    text-align: right;
+  }
+
+  .print-heading h1 {
+    margin: 0 0 8px;
+    font-size: 22pt;
+    letter-spacing: 0.02em;
+  }
+
+  .print-facts,
+  .print-totals {
+    margin: 0;
+  }
+
+  .print-facts div,
+  .print-totals div {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .print-facts dt,
+  .print-totals dt {
+    color: #444;
+  }
+
+  .print-facts dd,
+  .print-totals dd {
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .print-client {
+    margin-bottom: 24px;
+  }
+
+  .print-label {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #555;
+    margin-bottom: 2px;
+  }
+
+  .print-client-name {
+    font-weight: 700;
+  }
+
+  .print-lines {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+  }
+
+  .print-lines th {
+    text-align: left;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #555;
+    border-bottom: 1.5px solid #000;
+    padding: 6px 6px 6px 0;
+  }
+
+  .print-lines td {
+    border-bottom: 0.5px solid #bbb;
+    padding: 6px 6px 6px 0;
+    vertical-align: top;
+  }
+
+  .print-lines .num {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* A long invoice can go onto a second page, but a line is never cut in half. */
+  .print-lines tr {
+    break-inside: avoid;
+  }
+
+  .print-totals {
+    width: 50%;
+    margin-left: auto;
+    break-inside: avoid;
+  }
+
+  .print-totals div {
+    padding: 3px 0;
+  }
+
+  .print-grand-total {
+    margin-top: 4px;
+    padding-top: 6px !important;
+    border-top: 1.5px solid #000;
+    font-size: 12pt;
+    font-weight: 700;
+  }
+
+  .print-grand-total dt {
+    color: #000;
+  }
+
+  .print-note {
+    margin-top: 28px;
+    white-space: pre-line;
   }
 }
