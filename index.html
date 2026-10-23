@@ -19,6 +19,7 @@
 <body>
   <header class="topbar">
     <div class="brand">My Invoice App</div>
+    <button id="install-top" type="button" class="install-top" data-i18n="installApp" hidden>⬇ Install app</button>
     <button id="language" class="language" data-i18n-title="changeLanguage">🌐 <span data-i18n="languageName">English</span></button>
   </header>
 
@@ -163,6 +164,34 @@
       <p id="no-clients" class="empty" data-i18n="noClients" hidden></p>
     </details>
 
+    <details class="backup card">
+      <summary>
+        <span data-i18n="backupTitle">💾 Backup</span>
+        <span id="backup-status" class="backup-status"></span>
+      </summary>
+      <p class="hint" data-i18n="backupHint"></p>
+      <div class="backup-buttons">
+        <button id="backup" type="button" class="small-primary" data-i18n="makeBackup">Download backup</button>
+        <button id="import" type="button" class="tool-button" data-i18n="importBackup">Import backup…</button>
+        <input id="import-file" type="file" accept=".json,application/json" hidden>
+      </div>
+      <p class="hint warning" data-i18n="importWarning"></p>
+    </details>
+
+    <details id="install-section" class="install card">
+      <summary data-i18n="installTitle">📱 Install as an app</summary>
+      <button id="install-button" type="button" class="small-primary" data-i18n="installApp" hidden>⬇ Install app</button>
+      <dl class="install-steps">
+        <dt>iPhone / iPad</dt>
+        <dd data-i18n="installIphone"></dd>
+        <dt>Android</dt>
+        <dd data-i18n="installAndroid"></dd>
+        <dt>Windows / Mac</dt>
+        <dd data-i18n="installComputer"></dd>
+      </dl>
+      <p class="hint" data-i18n="installHint"></p>
+    </details>
+
     <details class="settings card">
       <summary data-i18n="settings">Settings</summary>
 
@@ -282,6 +311,8 @@
   <script src="clients.js"></script>
   <script src="print.js"></script>
   <script src="export.js"></script>
+  <script src="backup.js"></script>
+  <script src="install.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

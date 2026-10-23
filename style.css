@@ -839,3 +839,92 @@ button.tool-button:hover {
   color: #cf222e;
   font-weight: 600;
 }
+
+/* Backup and Install sections, between Clients and Settings. */
+.backup,
+.install {
+  margin-top: 16px;
+}
+
+.backup summary,
+.install summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.backup[open] summary,
+.install[open] summary {
+  margin-bottom: 12px;
+}
+
+.install[hidden] {
+  display: none;
+}
+
+/* "Last backup: 23.10.2026." next to the title, orange when a backup is due. */
+.backup-status {
+  margin-left: 8px;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: #59636e;
+}
+
+.backup-status.due {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fff1e5;
+  color: #bc4c00;
+  font-weight: 600;
+}
+
+.backup-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.backup-buttons button {
+  padding: 10px 14px;
+}
+
+.hint.warning {
+  margin: 0;
+  color: #9a6700;
+}
+
+.install-steps {
+  margin: 12px 0;
+}
+
+.install-steps dt {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.install-steps dd {
+  margin: 2px 0 0;
+  color: #1f2328;
+}
+
+/* Install button in the top bar, only when the browser allows installing. */
+.topbar {
+  gap: 8px;
+}
+
+.topbar .brand {
+  margin-right: auto;
+}
+
+button.install-top {
+  background: #0969da;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+}
+
+button.install-top[hidden],
+#install-button[hidden] {
+  display: none;
+}

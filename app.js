@@ -291,6 +291,8 @@ function renderInvoiceList() {
   renderMonthFilter(allInvoices);
   const invoices = shownInvoices(allInvoices);
   renderMonthTotals(invoices);
+  // The backup reminder only shows when there are invoices to lose.
+  showBackupStatus();
 
   document.getElementById("invoices-title").textContent = t("invoicesTitle", { count: invoices.length });
   document.getElementById("no-invoices").hidden = invoices.length > 0;
@@ -819,6 +821,8 @@ addClientsFromInvoices();
 setUpForm();
 setUpMonthFilter();
 setUpSettings();
+setUpBackup();
+setUpInstall();
 renderLines();
 renderInvoiceList();
 renderClients();

@@ -115,6 +115,18 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - iPhone: Safari → Share → Add to Home Screen. Android and Windows: **Install app** in Chrome or Edge.
   - Opens full screen with its own icon and works offline.
 
+## After v1.0
+
+- [x] **21. Backup and import**
+  - One file with everything: invoices, numbering, clients, business details, settings.
+  - Import replaces everything on the device, after a warning.
+  - Shows the last backup date, in orange after 30 days or if never.
+
+- [x] **22. Install on Android (and computers)**
+  - An "Install app" button when the browser allows it (Android Chrome, Windows/Mac Chrome and Edge).
+  - Install steps for iPhone, Android and computers in the app and the README.
+  - No APK file for now: installing from Chrome gives a real app icon and updates with every `git push`.
+
 ## Maybe later
-- Backup and import, to move invoices between devices.
 - More business details: PDV number, phone, email, logo.
+- A real APK file for Android (e.g. made with PWABuilder), or publishing on Google Play.

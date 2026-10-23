@@ -19,7 +19,8 @@ I built it while learning git, one feature branch at a time.
 - **Print / PDF:** a clean A4 invoice with your business details.
 - **Export:** a CSV file for Excel with Bosnian settings.
 - **English and Bosnian:** switch with the 🌐 button.
-- **Works like a phone app:** add it to your home screen, and it opens full screen and works offline.
+- **Backup / import:** save everything to one file, and load it on another device.
+- **Works like a phone app:** install it on iPhone, Android or a computer. It opens full screen and works offline.
 
 The full, up-to-date list of what works is in [tracking.md](tracking.md). The original plan is in [plan.md](plan.md).
 
@@ -28,10 +29,19 @@ The full, up-to-date list of what works is in [tracking.md](tracking.md). The or
 2. Tap **Share**, then **Add to Home Screen**, then **Add**.
 3. Open the app from the new icon. After opening it once with internet, it also works offline.
 
-On Android, open the link in Chrome and choose **Install app**. On a Windows computer, open it in Chrome or Edge and click the **Install** icon in the address bar.
+## Install on Android
+1. Open https://denissarajlic.github.io/invoiceapp/ in **Chrome**.
+2. Tap the blue **⬇ Install app** button at the top, then **Install**.
+   If there's no button, open Chrome's **⋮** menu and choose **Install app** (or **Add to Home screen**).
+3. The app appears in your app drawer and on the home screen. It works offline.
+
+## Install on a computer
+Open the link in **Chrome** or **Edge** and click **⬇ Install app** at the top, or the install icon at the right of the address bar. The app gets its own window and a Start menu entry.
 
 ## Your data
-Invoices, clients and settings are saved only in the browser on your own device. Nothing is sent to a server, and there is no account. Each device keeps its own invoices, and there's no backup yet. Clearing the browser's website data deletes them.
+Invoices, clients and settings are saved only in the browser on your own device. Nothing is sent to a server, and there is no account. Each device, and each installed app, keeps its own invoices. Clearing the browser's website data deletes them.
+
+**Use 💾 Backup:** *Download backup* saves everything in one file. *Import backup* on another device (or after data was lost) brings it all back. The app reminds you when your last backup is more than 30 days old.
 
 ## Run it on a computer
 No installation is needed. Download or clone the project and double-click `index.html`. Offline mode and installing only work on the online version.
@@ -45,6 +55,8 @@ No installation is needed. Download or clone the project and double-click `index
 | `clients.js` | The client list |
 | `print.js` | Printing an invoice |
 | `export.js` | Exporting to CSV |
+| `backup.js` | Backup and import |
+| `install.js` | The Install app button |
 | `i18n.js` | All texts in English and Bosnian |
 | `sw.js` | Keeps a copy of the app on the device for offline use |
 | `manifest.webmanifest` | App name and icon for the home screen |
