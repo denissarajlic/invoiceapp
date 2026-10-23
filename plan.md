@@ -91,7 +91,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Entered once and used on every invoice: they fill the empty top-left corner of the printout from Feature 14.
   - Also holds the `EUR` / `€` choice.
 
-- [ ] **16. Filter by month**
+- [x] **16. Filter by month**
   - Pick a month to show only that month's invoices (by invoice date), or **All**.
   - Shows that month's totals: without VAT, VAT, total.
 

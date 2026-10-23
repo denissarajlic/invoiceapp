@@ -281,13 +281,19 @@ function byNumberNewestFirst(a, b) {
 
 // The list of saved invoices under the form.
 function renderInvoiceList() {
-  const invoices = loadInvoices().sort(byNumberNewestFirst);
+  const allInvoices = loadInvoices().sort(byNumberNewestFirst);
   const list = document.getElementById("invoice-list");
   const template = document.getElementById("invoice-row-template");
 
-  document.getElementById("invoices-title").textContent = t("invoicesTitle", { count: invoices.length });
+  // Money still owed counts every invoice, whatever month is picked.
   document.getElementById("unpaid-total").textContent =
-    t("unpaidTotal", { amount: formatTotals(totalsByCurrency(invoices.filter((saved) => !saved.paid))) });
+    t("unpaidTotal", { amount: formatTotals(totalsByCurrency(allInvoices.filter((saved) => !saved.paid))) });
+
+  renderMonthFilter(allInvoices);
+  const invoices = shownInvoices(allInvoices);
+  renderMonthTotals(invoices);
+
+  document.getElementById("invoices-title").textContent = t("invoicesTitle", { count: invoices.length });
   document.getElementById("no-invoices").hidden = invoices.length > 0;
 
   list.replaceChildren();
@@ -323,6 +329,57 @@ function renderInvoiceList() {
     remove.addEventListener("click", () => deleteInvoice(saved.number));
     list.append(row);
   }
+}
+
+// The month picked above the list: "all", or a month like "2026-10".
+let monthFilter = "all";
+
+// "2026-10-23" → "2026-10". Empty if the invoice has no date.
+function monthOf(saved) {
+  return (saved.date || "").slice(0, 7);
+}
+
+// "2026-10" → "October 2026" or "Oktobar 2026."
+function formatMonth(month) {
+  const [year, number] = month.split("-");
+  const name = t("months")[Number(number) - 1];
+  const capitalized = name.charAt(0).toUpperCase() + name.slice(1);
+  return language === "bs" ? `${capitalized} ${year}.` : `${capitalized} ${year}`;
+}
+
+// The invoices the list shows: all of them, or only the picked month's.
+function shownInvoices(allInvoices) {
+  if (monthFilter === "all") return allInvoices;
+  return allInvoices.filter((saved) => monthOf(saved) === monthFilter);
+}
+
+// "All", then every month that has invoices, newest first.
+function renderMonthFilter(allInvoices) {
+  const months = [...new Set(allInvoices.map(monthOf).filter(Boolean))].sort().reverse();
+  // The picked month has no invoices left (e.g. after a delete): show all again.
+  if (monthFilter !== "all" && !months.includes(monthFilter)) monthFilter = "all";
+
+  const select = document.getElementById("month-filter");
+  const all = new Option(t("allMonths"), "all");
+  select.replaceChildren(all, ...months.map((month) => new Option(formatMonth(month), month)));
+  select.value = monthFilter;
+}
+
+// Below the month menu: that month's amount without VAT, VAT and total.
+function renderMonthTotals(invoices) {
+  const box = document.getElementById("month-totals");
+  box.hidden = monthFilter === "all";
+  if (box.hidden) return;
+  const sums = { subtotal: {}, vat: {}, total: {} };
+  for (const saved of invoices) {
+    const totals = totalsOf(saved.lines);
+    for (const key of ["subtotal", "vat", "total"]) {
+      sums[key][saved.currency] = (sums[key][saved.currency] || 0) + totals[key];
+    }
+  }
+  document.getElementById("month-subtotal").textContent = formatTotals(sums.subtotal);
+  document.getElementById("month-vat").textContent = formatTotals(sums.vat);
+  document.getElementById("month-total").textContent = formatTotals(sums.total);
 }
 
 // Add up the totals (with VAT) of some invoices, separately per currency:
@@ -533,6 +590,11 @@ function saveInvoice() {
   // A client name that's not on the client list yet is added to it.
   addClientIfNew({ name: toSave.client, address: toSave.clientAddress, jib: toSave.clientJib });
 
+  // Make sure the invoice you just saved is visible in the list.
+  if (monthFilter !== "all" && monthOf(toSave) !== monthFilter) {
+    monthFilter = monthOf(toSave) || "all";
+  }
+
   // Start a fresh invoice.
   invoice = blankInvoice();
   fillForm();
@@ -618,6 +680,14 @@ function setUpForm() {
   });
 }
 
+function setUpMonthFilter() {
+  const select = document.getElementById("month-filter");
+  select.addEventListener("change", () => {
+    monthFilter = select.value;
+    renderInvoiceList();
+  });
+}
+
 function setUpSettings() {
   const choice = document.getElementById("euro-symbol");
   choice.value = euroSymbol();
@@ -680,6 +750,7 @@ document.getElementById("language").addEventListener("click", () => {
 numberOldInvoices();
 addClientsFromInvoices();
 setUpForm();
+setUpMonthFilter();
 setUpSettings();
 renderLines();
 renderInvoiceList();

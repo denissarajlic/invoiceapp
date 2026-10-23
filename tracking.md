@@ -52,6 +52,16 @@ Last updated: 23 Oct 2026
 - A deleted number is **never given out again**. If you delete `2026-003`, the next new invoice still gets `2026-004` (or the next free number), so there's a gap.
 - If you delete the invoice that's open for editing, the form goes back to a new, empty invoice.
 
+## Filter by month
+- Above the list: **Show** (Prikaži) with a menu: **All months** (Svi mjeseci), then every month that has invoices, newest first, e.g. "October 2026" / "Oktobar 2026.".
+- The month comes from the invoice date.
+- Picking a month shows only that month's invoices. The title counts only those, e.g. **Invoices (4)**.
+- With a month picked, a box shows that month's **amount without VAT**, **VAT 17%** and **total**. KM and EUR are added up separately.
+- The **Unpaid** total above it still counts all invoices, whatever month is picked.
+- If you save an invoice from another month while a month is picked, the list switches to that invoice's month.
+- If the picked month has no invoices left (for example after deleting), the list goes back to All months.
+- The app doesn't remember the picked month. After reloading, it shows All months.
+
 ## Paid / unpaid
 - Each invoice is **Unpaid** (Neplaćeno) or **Paid** (Plaćeno). A new invoice starts as Unpaid, and so does a duplicate.
 - The list shows a label on each invoice: grey **Unpaid** or green **Paid**.

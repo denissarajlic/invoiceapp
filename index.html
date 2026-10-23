@@ -98,6 +98,27 @@
     <section class="invoices">
       <h1 id="invoices-title"></h1>
       <p id="unpaid-total" class="unpaid-total"></p>
+
+      <label class="month-filter">
+        <span data-i18n="show">Show</span>
+        <select id="month-filter"></select>
+      </label>
+
+      <dl id="month-totals" class="month-totals" hidden>
+        <div>
+          <dt data-i18n="withoutVat">Amount without VAT</dt>
+          <dd id="month-subtotal"></dd>
+        </div>
+        <div>
+          <dt data-i18n="vat">VAT 17%</dt>
+          <dd id="month-vat"></dd>
+        </div>
+        <div class="grand-total">
+          <dt data-i18n="total">Total</dt>
+          <dd id="month-total"></dd>
+        </div>
+      </dl>
+
       <ul id="invoice-list" class="invoice-list"></ul>
       <p id="no-invoices" class="empty" data-i18n="noInvoices" hidden></p>
     </section>
