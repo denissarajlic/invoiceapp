@@ -27,7 +27,8 @@ const translations = {
     negativeQuantity: "Quantity can't be negative.",
     negativePrice: "Price can't be negative.",
     save: "Save",
-    saved: "Invoice saved.",
+    saved: "Invoice {number} saved.",
+    invoiceNumber: "No. {number}",
     cantSave: "Not saved. Fix the lines marked in red first.",
     saveFailed: "Not saved. The browser didn't allow it.",
     savedCount: "Saved invoices: {count}",
@@ -56,7 +57,8 @@ const translations = {
     negativeQuantity: "Količina ne može biti negativna.",
     negativePrice: "Cijena ne može biti negativna.",
     save: "Sačuvaj",
-    saved: "Faktura je sačuvana.",
+    saved: "Faktura {number} je sačuvana.",
+    invoiceNumber: "Br. {number}",
     cantSave: "Nije sačuvano. Prvo ispravi stavke označene crvenom bojom.",
     saveFailed: "Nije sačuvano. Preglednik to nije dozvolio.",
     savedCount: "Sačuvane fakture: {count}",
@@ -74,8 +76,13 @@ function startingLanguage() {
 
 let language = startingLanguage();
 
-function t(key) {
-  return translations[language][key];
+// t("saved", { number: "2026-004" }) puts the number in place of {number}.
+function t(key, values = {}) {
+  let text = translations[language][key];
+  for (const [name, value] of Object.entries(values)) {
+    text = text.replace(`{${name}}`, value);
+  }
+  return text;
 }
 
 // Put the right text into every element marked with data-i18n.

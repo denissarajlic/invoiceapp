@@ -35,6 +35,19 @@ h1 {
   margin: 8px 0 16px;
 }
 
+.title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.invoice-number {
+  font-weight: 600;
+  color: #59636e;
+  font-variant-numeric: tabular-nums;
+}
+
 h2 {
   font-size: 1.05rem;
   margin: 20px 0 8px;

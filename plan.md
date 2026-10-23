@@ -34,7 +34,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Each device keeps its own invoices.
   - **Save** refuses to save while any line has a problem (from Feature 3).
 
-- [ ] **5. Invoice number**
+- [x] **5. Invoice number**
   - Each new invoice gets the next number automatically: `2026-001`, `2026-002`, …
   - Numbering starts again at `001` each new year.
 

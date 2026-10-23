@@ -1,5 +1,6 @@
 // Saved invoices live in the browser under this name.
 const INVOICES_KEY = "invoices";
+const LAST_NUMBERS_KEY = "lastInvoiceNumbers";
 
 // The invoice being filled in.
 // Prices are typed without VAT; the app adds 17% on top.
@@ -147,16 +148,79 @@ function loadInvoices() {
   }
 }
 
+// The last number given out in each year, e.g. { "2026": 4 }.
+// Kept separately so a deleted invoice's number is never given out again.
+function loadLastNumbers() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LAST_NUMBERS_KEY));
+    return saved && typeof saved === "object" ? saved : {};
+  } catch {
+    return {};
+  }
+}
+
+// The year an invoice is numbered in: the year of its date.
+function yearOf(date) {
+  return (date || todayText()).slice(0, 4);
+}
+
+// "2026-004"
+function numberText(year, count) {
+  return `${year}-${String(count).padStart(3, "0")}`;
+}
+
+// The last number used in a year, from the remembered counter and,
+// to be safe, from the saved invoices themselves.
+function lastNumberIn(year, invoices, lastNumbers) {
+  let last = lastNumbers[year] || 0;
+  for (const saved of invoices) {
+    if (saved.number && saved.number.startsWith(`${year}-`)) {
+      last = Math.max(last, parseInt(saved.number.slice(5), 10) || 0);
+    }
+  }
+  return last;
+}
+
+function nextNumber(date) {
+  const year = yearOf(date);
+  return numberText(year, lastNumberIn(year, loadInvoices(), loadLastNumbers()) + 1);
+}
+
+// Show the number this invoice will get when you save it.
+function showNextNumber() {
+  document.getElementById("invoice-number").textContent =
+    t("invoiceNumber", { number: nextNumber(invoice.date) });
+}
+
+// Invoices saved before numbers existed get one, in the order they were saved.
+function numberOldInvoices() {
+  const invoices = loadInvoices();
+  if (invoices.every((saved) => saved.number)) return;
+  const lastNumbers = loadLastNumbers();
+  for (const saved of invoices) {
+    if (saved.number) continue;
+    const year = yearOf(saved.date);
+    const count = lastNumberIn(year, invoices, lastNumbers) + 1;
+    saved.number = numberText(year, count);
+    lastNumbers[year] = count;
+  }
+  try {
+    localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices));
+    localStorage.setItem(LAST_NUMBERS_KEY, JSON.stringify(lastNumbers));
+  } catch {
+    // Try again next time the app opens.
+  }
+}
+
 function showSavedCount() {
-  const count = loadInvoices().length;
-  document.getElementById("saved-count").textContent = t("savedCount").replace("{count}", count);
+  document.getElementById("saved-count").textContent = t("savedCount", { count: loadInvoices().length });
 }
 
 // Show a short message under the Save button. Success messages fade after a few seconds.
 let messageTimer;
-function showMessage(key, isError) {
+function showMessage(key, isError, values) {
   const message = document.getElementById("save-message");
-  message.textContent = t(key);
+  message.textContent = t(key, values);
   message.className = isError ? "error" : "success";
   message.hidden = false;
   clearTimeout(messageTimer);
@@ -174,8 +238,16 @@ function saveInvoice() {
     return;
   }
 
+  // The number is only used up now, when the invoice is really saved.
   const invoices = loadInvoices();
+  const lastNumbers = loadLastNumbers();
+  const year = yearOf(invoice.date);
+  const count = lastNumberIn(year, invoices, lastNumbers) + 1;
+  const number = numberText(year, count);
+  lastNumbers[year] = count;
+
   invoices.push({
+    number,
     client: invoice.client.trim(),
     date: invoice.date,
     currency: invoice.currency,
@@ -188,6 +260,7 @@ function saveInvoice() {
   });
   try {
     localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices));
+    localStorage.setItem(LAST_NUMBERS_KEY, JSON.stringify(lastNumbers));
   } catch {
     showMessage("saveFailed", true);
     return;
@@ -198,7 +271,7 @@ function saveInvoice() {
   fillForm();
   renderLines();
   showSavedCount();
-  showMessage("saved", false);
+  showMessage("saved", false, { number });
 }
 
 // Put the current invoice's client, date and currency into the form.
@@ -206,6 +279,7 @@ function fillForm() {
   document.getElementById("client").value = invoice.client;
   document.getElementById("date").value = invoice.date;
   document.getElementById("currency").value = invoice.currency;
+  showNextNumber();
 }
 
 function setUpForm() {
@@ -222,7 +296,11 @@ function setUpForm() {
   });
 
   client.addEventListener("input", () => { invoice.client = client.value; });
-  date.addEventListener("input", () => { invoice.date = date.value; });
+  date.addEventListener("input", () => {
+    invoice.date = date.value;
+    // A date in another year changes the number, e.g. 2025-… instead of 2026-…
+    showNextNumber();
+  });
   currency.addEventListener("change", () => {
     invoice.currency = currency.value;
     updateTotals();
@@ -242,9 +320,11 @@ document.getElementById("language").addEventListener("click", () => {
   translatePage();
   showProblems();
   showSavedCount();
+  showNextNumber();
   document.getElementById("save-message").hidden = true;
 });
 
+numberOldInvoices();
 setUpForm();
 renderLines();
 showSavedCount();

@@ -45,6 +45,15 @@ Last updated: 23 Oct 2026
 - They're saved in the browser on the device you use. There's no account and no login. Each device keeps its own invoices.
 - Clearing the browser's website data deletes the saved invoices.
 
+## Invoice number
+- Every saved invoice gets a number: the year, then a counter. For example `2026-001`, `2026-002`, …
+- The top right of the form shows the number the invoice will get, e.g. **No. 2026-004** (Br. 2026-004).
+- The year comes from the invoice date. Each year starts again at `001`. If you change the date to another year, the number shown changes too, e.g. to `2025-…`.
+- The number is only used up when you press **Save**. An invoice you never save doesn't use a number.
+- After saving, the message shows the number: "Invoice 2026-004 saved."
+- The app remembers the last number it gave out in each year, so a number is never given out twice.
+- Invoices saved before numbering existed got numbers automatically, in the order they were saved.
+
 ## Language
 - The app works in **English** and **Bosnian**.
 - The **🌐** button at the top right switches between them.
