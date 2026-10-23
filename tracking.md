@@ -65,7 +65,7 @@ Last updated: 23 Oct 2026
 ## Export to CSV
 - **⬇ Export (CSV)** (Izvoz) next to the month menu downloads a file that opens in Excel or Google Sheets.
 - It contains exactly the invoices the list shows: the picked month, or all of them.
-- One row per invoice, in list order: invoice number, client, date, due date, amount without VAT, VAT, total, currency (KM or EUR) and paid/unpaid. The first row has the column names, in the app's language.
+- One row per invoice, in list order: invoice number, client, date, due date, amount without VAT, VAT, total, currency (KM or EUR) and status (paid, unpaid or overdue). The first row has the column names, in the app's language.
 - Made for Excel with Bosnian settings: `;` between columns, amounts like `1250,00` (so Excel can add them up), dates like `23.10.2026`. Č, ć, š, đ and ž come out correctly.
 - The file is named after what's in it, e.g. `invoices-2026-10.csv`, `invoices-all.csv`, or in Bosnian `fakture-2026-10.csv`, `fakture-svi.csv`.
 - A client name starting with `=`, `+`, `-` or `@` gets a `'` in front in the file, so Excel never treats it as a formula.
@@ -109,6 +109,15 @@ Last updated: 23 Oct 2026
 - Quantities are printed Bosnian style too, e.g. `1,5`.
 - A long invoice continues on a second page, and a line is never cut in half.
 - **PDF:** in the print window, choose "Save as PDF" as the printer. On iPhone, use the Share button in the print view.
+
+## Overdue
+- An **unpaid** invoice whose due date has passed is **overdue**. Its label turns red and says how late it is: **Overdue · 12 days** (Kasni 12 dana). Its due date in the list turns red too.
+- An invoice due **today** isn't overdue yet. It becomes overdue tomorrow, at "1 day".
+- Marking an invoice as paid removes the overdue label.
+- Under "Unpaid", in red: **Overdue: …** (Kasni s plaćanjem), the total with VAT of all overdue invoices. KM and EUR are added up separately. With nothing overdue, it shows `0,00 KM`.
+- Like Unpaid, the Overdue total counts all invoices, whatever month is picked.
+- In the CSV export, the status column says "Overdue" (Kasni) for these invoices.
+- The days are counted when the page loads or the list changes. If the page stays open past midnight, reload it to update them.
 
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.

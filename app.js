@@ -288,6 +288,8 @@ function renderInvoiceList() {
   // Money still owed counts every invoice, whatever month is picked.
   document.getElementById("unpaid-total").textContent =
     t("unpaidTotal", { amount: formatTotals(totalsByCurrency(allInvoices.filter((saved) => !saved.paid))) });
+  document.getElementById("overdue-total").textContent =
+    t("overdueTotal", { amount: formatTotals(totalsByCurrency(allInvoices.filter((saved) => statusOf(saved) === "overdue"))) });
 
   renderMonthFilter(allInvoices);
   const invoices = shownInvoices(allInvoices);
@@ -318,9 +320,12 @@ function renderInvoiceList() {
     const duplicate = row.querySelector(".duplicate");
     duplicate.textContent = t("duplicate");
     duplicate.addEventListener("click", () => duplicateInvoice(saved));
+    const state = statusOf(saved);
     const status = row.querySelector(".status");
-    status.textContent = t(saved.paid ? "paid" : "unpaid");
-    status.classList.toggle("paid", Boolean(saved.paid));
+    status.textContent = state === "overdue" ? overdueText(daysLate(saved)) : t(state);
+    status.classList.toggle("paid", state === "paid");
+    status.classList.toggle("overdue", state === "overdue");
+    row.classList.toggle("overdue", state === "overdue");
     const togglePaid = row.querySelector(".toggle-paid");
     togglePaid.textContent = t(saved.paid ? "markUnpaid" : "markPaid");
     togglePaid.addEventListener("click", () => setPaid(saved.number, !saved.paid));
@@ -380,6 +385,30 @@ function renderMonthTotals(invoices) {
   document.getElementById("month-subtotal").textContent = formatTotals(sums.subtotal);
   document.getElementById("month-vat").textContent = formatTotals(sums.vat);
   document.getElementById("month-total").textContent = formatTotals(sums.total);
+}
+
+// How many days late an unpaid invoice is. 0 if it's paid, not due yet, or due today.
+function daysLate(saved) {
+  const due = dueDateOf(saved);
+  if (saved.paid || !due) return 0;
+  const [year, month, day] = due.split("-").map(Number);
+  const now = new Date();
+  // Count whole days, so summer time changes don't matter.
+  const days = (Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - Date.UTC(year, month - 1, day)) / 86400000;
+  return Math.max(0, days);
+}
+
+// "paid", "overdue" or "unpaid".
+function statusOf(saved) {
+  if (saved.paid) return "paid";
+  return daysLate(saved) > 0 ? "overdue" : "unpaid";
+}
+
+// "Overdue · 12 days" / "Kasni 12 dana". English says "1 day" but "21 days";
+// Bosnian says "1 dan" and "21 dan", but "11 dana".
+function overdueText(days) {
+  const one = language === "bs" ? days % 10 === 1 && days % 100 !== 11 : days === 1;
+  return t("overdueDays", { days, unit: t(one ? "day" : "days") });
 }
 
 // Add up the totals (with VAT) of some invoices, separately per currency:

@@ -101,7 +101,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - One row per invoice: number, client, date, due date, without VAT, VAT, total, currency, paid/unpaid.
   - Set up for Excel with Bosnian settings (`;` between columns, `1250,00`).
 
-- [ ] **18. Overdue**
+- [x] **18. Overdue**
   - An unpaid invoice past its due date is marked **Overdue** in red, with the number of days late.
   - An invoice due today isn't overdue yet. It becomes overdue tomorrow.
   - Shows the overdue total.
