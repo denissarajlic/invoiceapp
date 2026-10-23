@@ -686,6 +686,7 @@ function setUpMonthFilter() {
     monthFilter = select.value;
     renderInvoiceList();
   });
+  document.getElementById("export").addEventListener("click", exportCsv);
 }
 
 function setUpSettings() {

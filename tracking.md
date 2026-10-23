@@ -62,6 +62,15 @@ Last updated: 23 Oct 2026
 - If the picked month has no invoices left (for example after deleting), the list goes back to All months.
 - The app doesn't remember the picked month. After reloading, it shows All months.
 
+## Export to CSV
+- **⬇ Export (CSV)** (Izvoz) next to the month menu downloads a file that opens in Excel or Google Sheets.
+- It contains exactly the invoices the list shows: the picked month, or all of them.
+- One row per invoice, in list order: invoice number, client, date, due date, amount without VAT, VAT, total, currency (KM or EUR) and paid/unpaid. The first row has the column names, in the app's language.
+- Made for Excel with Bosnian settings: `;` between columns, amounts like `1250,00` (so Excel can add them up), dates like `23.10.2026`. Č, ć, š, đ and ž come out correctly.
+- The file is named after what's in it, e.g. `invoices-2026-10.csv`, `invoices-all.csv`, or in Bosnian `fakture-2026-10.csv`, `fakture-svi.csv`.
+- A client name starting with `=`, `+`, `-` or `@` gets a `'` in front in the file, so Excel never treats it as a formula.
+- CSV and PDF files saved inside the app's folder are ignored by git, so test files don't end up in the project.
+
 ## Paid / unpaid
 - Each invoice is **Unpaid** (Neplaćeno) or **Paid** (Plaćeno). A new invoice starts as Unpaid, and so does a duplicate.
 - The list shows a label on each invoice: grey **Unpaid** or green **Paid**.

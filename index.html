@@ -99,10 +99,13 @@
       <h1 id="invoices-title"></h1>
       <p id="unpaid-total" class="unpaid-total"></p>
 
-      <label class="month-filter">
-        <span data-i18n="show">Show</span>
-        <select id="month-filter"></select>
-      </label>
+      <div class="list-tools">
+        <label class="month-filter">
+          <span data-i18n="show">Show</span>
+          <select id="month-filter"></select>
+        </label>
+        <button id="export" type="button" class="tool-button" data-i18n="exportCsv">⬇ Export (CSV)</button>
+      </div>
 
       <dl id="month-totals" class="month-totals" hidden>
         <div>
@@ -247,6 +250,7 @@
   <script src="i18n.js"></script>
   <script src="clients.js"></script>
   <script src="print.js"></script>
+  <script src="export.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

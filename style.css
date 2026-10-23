@@ -756,3 +756,30 @@ textarea {
 .month-totals .grand-total dt {
   color: #1f2328;
 }
+
+/* Month menu and Export button, side by side above the list. */
+.list-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.list-tools .month-filter {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+button.tool-button {
+  background: #fff;
+  color: #1f2328;
+  border: 1px solid #d0d7de;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+button.tool-button:hover {
+  background: #f4f5f7;
+}

@@ -95,7 +95,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Pick a month to show only that month's invoices (by invoice date), or **All**.
   - Shows that month's totals: without VAT, VAT, total.
 
-- [ ] **17. Export to CSV**
+- [x] **17. Export to CSV**
   - Downloads a file that opens in Excel or Google Sheets.
   - Exports what the list shows (the picked month, or all).
   - One row per invoice: number, client, date, due date, without VAT, VAT, total, currency, paid/unpaid.
