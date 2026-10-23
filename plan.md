@@ -38,14 +38,15 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Each new invoice gets the next number automatically: `2026-001`, `2026-002`, …
   - Numbering starts again at `001` each new year.
 
-- [ ] **6. Invoice list**
+- [x] **6. Invoice list**
   - All invoices, sorted by number, newest first.
-  - Each row shows number, client, date, due date and total.
+  - Each row shows number, client, date and total. (The due date is added in Feature 7.)
 
 - [ ] **7. Due date**
   - Set automatically to 15 days after the invoice date. It can be changed by hand.
   - If the invoice date is changed later, the due date stays as it is.
   - A due date before the invoice date is allowed.
+  - Shown in the invoice list too.
 
 - [ ] **8. Amount format**
   - Two decimals and the currency, Bosnian style: `1.250,00 KM`.

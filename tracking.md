@@ -40,7 +40,6 @@ Last updated: 23 Oct 2026
 - **Save** stores the invoice. You see "Invoice saved." and the form starts again as a new, empty invoice.
 - If any line has a problem, Save refuses: "Not saved. Fix the lines marked in red first." Every line is checked, including one you haven't left yet. The message goes away once the lines are fixed.
 - Pressing Enter in a field does not save.
-- Below the form: **Saved invoices: 3**, the number of invoices saved so far.
 - Invoices are still there after you close and reopen the browser.
 - They're saved in the browser on the device you use. There's no account and no login. Each device keeps its own invoices.
 - Clearing the browser's website data deletes the saved invoices.
@@ -54,6 +53,15 @@ Last updated: 23 Oct 2026
 - The app remembers the last number it gave out in each year, so a number is never given out twice.
 - Invoices saved before numbering existed got numbers automatically, in the order they were saved.
 
+## Invoice list
+- Under the form: **Invoices (3)** (Fakture), with every saved invoice.
+- Sorted by number, newest first. `2026-010` comes before `2026-009`, and 2026 invoices come before 2025 ones.
+- Each invoice shows its **number**, **client**, **date** (like `23.10.2026.`) and **total** with VAT, in its own currency.
+- An invoice without a client name shows "(no client)" (bez klijenta) in grey.
+- A newly saved invoice appears at the top of the list straight away.
+- With no saved invoices, it says "No saved invoices yet."
+- On a phone, each invoice takes two rows: number and total on top, client and date below. On a computer, each invoice is one row.
+
 ## Language
 - The app works in **English** and **Bosnian**.
 - The **🌐** button at the top right switches between them.
@@ -61,7 +69,7 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
-- Saved invoices can't be seen, opened or changed yet. You only see how many there are.
+- Saved invoices can't be opened, changed or deleted yet. Tapping one in the list does nothing.
 - An invoice you haven't saved is lost if you reload or close the page.
 - Amounts use a dot for decimals and have no thousands separator yet (`1250.00 KM`, not `1.250,00 KM`).
 - A line with a problem is still counted in the totals on screen until you fix it.
