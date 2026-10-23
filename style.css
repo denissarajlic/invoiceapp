@@ -231,6 +231,82 @@ input.invalid {
   grid-area: error;
 }
 
+/* The list of saved invoices under the form. */
+.invoices {
+  margin-top: 32px;
+}
+
+.invoice-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.invoice-list:empty {
+  display: none;
+}
+
+/* On a phone: number and total on top, client and date below. */
+.invoice-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "number total"
+    "client date";
+  gap: 2px 12px;
+  padding: 12px 16px;
+  border-top: 1px solid #eaeef2;
+}
+
+.invoice-row:first-child {
+  border-top: none;
+}
+
+.row-number {
+  grid-area: number;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.row-client {
+  grid-area: client;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row-client.missing {
+  color: #59636e;
+  font-style: italic;
+}
+
+.row-date {
+  grid-area: date;
+  color: #59636e;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.row-total {
+  grid-area: total;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* On a computer: one row per invoice, like a table. */
+@media (min-width: 640px) {
+  .invoice-row {
+    grid-template-columns: 6rem 1fr 7rem 9rem;
+    grid-template-areas: "number client date total";
+    align-items: baseline;
+  }
+}
+
 .empty {
   color: #59636e;
   font-size: 0.9rem;

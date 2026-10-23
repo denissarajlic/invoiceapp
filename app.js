@@ -47,9 +47,23 @@ function lineCents(line) {
   return toCents(numberFrom(line.quantity) * numberFrom(line.price));
 }
 
+// Amount without VAT, VAT and total of any invoice, in cents.
+function totalsOf(lines) {
+  const subtotal = lines.reduce((sum, line) => sum + lineCents(line), 0);
+  const vat = Math.round(subtotal * VAT_RATE);
+  return { subtotal, vat, total: subtotal + vat };
+}
+
 // "292.50 KM". The Bosnian style (292,50 KM) comes in Feature 8.
-function formatMoney(cents) {
-  return `${(cents / 100).toFixed(2)} ${invoice.currency}`;
+function formatMoney(cents, currency = invoice.currency) {
+  return `${(cents / 100).toFixed(2)} ${currency}`;
+}
+
+// "2026-10-23" → "23.10.2026."
+function formatDate(date) {
+  if (!date) return "";
+  const [year, month, day] = date.split("-");
+  return `${day}.${month}.${year}.`;
 }
 
 // Work out every line amount and the three totals, and show them.
@@ -59,11 +73,10 @@ function updateTotals() {
     amounts[index].textContent = formatMoney(lineCents(line));
   });
 
-  const subtotal = invoice.lines.reduce((sum, line) => sum + lineCents(line), 0);
-  const vat = Math.round(subtotal * VAT_RATE);
+  const { subtotal, vat, total } = totalsOf(invoice.lines);
   document.getElementById("subtotal").textContent = formatMoney(subtotal);
   document.getElementById("vat").textContent = formatMoney(vat);
-  document.getElementById("total").textContent = formatMoney(subtotal + vat);
+  document.getElementById("total").textContent = formatMoney(total);
 }
 
 // What's wrong with a line, as a list of text keys. Empty list = the line is OK.
@@ -212,8 +225,39 @@ function numberOldInvoices() {
   }
 }
 
-function showSavedCount() {
-  document.getElementById("saved-count").textContent = t("savedCount", { count: loadInvoices().length });
+// "2026-004" → [2026, 4], so numbers can be sorted: 2026-010 comes after 2026-009.
+function numberParts(number) {
+  const [year, count] = (number || "").split("-");
+  return [parseInt(year, 10) || 0, parseInt(count, 10) || 0];
+}
+
+// Newest number first.
+function byNumberNewestFirst(a, b) {
+  const [yearA, countA] = numberParts(a.number);
+  const [yearB, countB] = numberParts(b.number);
+  return yearB - yearA || countB - countA;
+}
+
+// The list of saved invoices under the form.
+function renderInvoiceList() {
+  const invoices = loadInvoices().sort(byNumberNewestFirst);
+  const list = document.getElementById("invoice-list");
+  const template = document.getElementById("invoice-row-template");
+
+  document.getElementById("invoices-title").textContent = t("invoicesTitle", { count: invoices.length });
+  document.getElementById("no-invoices").hidden = invoices.length > 0;
+
+  list.replaceChildren();
+  for (const saved of invoices) {
+    const row = template.content.firstElementChild.cloneNode(true);
+    row.querySelector(".row-number").textContent = saved.number;
+    const client = row.querySelector(".row-client");
+    client.textContent = saved.client || t("noClient");
+    client.classList.toggle("missing", !saved.client);
+    row.querySelector(".row-date").textContent = formatDate(saved.date);
+    row.querySelector(".row-total").textContent = formatMoney(totalsOf(saved.lines).total, saved.currency);
+    list.append(row);
+  }
 }
 
 // Show a short message under the Save button. Success messages fade after a few seconds.
@@ -270,7 +314,7 @@ function saveInvoice() {
   invoice = blankInvoice();
   fillForm();
   renderLines();
-  showSavedCount();
+  renderInvoiceList();
   showMessage("saved", false, { number });
 }
 
@@ -319,7 +363,7 @@ document.getElementById("language").addEventListener("click", () => {
   localStorage.setItem(LANGUAGE_KEY, language);
   translatePage();
   showProblems();
-  showSavedCount();
+  renderInvoiceList();
   showNextNumber();
   document.getElementById("save-message").hidden = true;
 });
@@ -327,4 +371,4 @@ document.getElementById("language").addEventListener("click", () => {
 numberOldInvoices();
 setUpForm();
 renderLines();
-showSavedCount();
+renderInvoiceList();

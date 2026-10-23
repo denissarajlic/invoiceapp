@@ -62,8 +62,21 @@
       <p id="save-message" role="status" hidden></p>
     </form>
 
-    <p id="saved-count" class="empty"></p>
+    <section class="invoices">
+      <h1 id="invoices-title"></h1>
+      <ul id="invoice-list" class="invoice-list"></ul>
+      <p id="no-invoices" class="empty" data-i18n="noInvoices" hidden></p>
+    </section>
   </main>
+
+  <template id="invoice-row-template">
+    <li class="invoice-row">
+      <span class="row-number"></span>
+      <span class="row-client"></span>
+      <span class="row-date"></span>
+      <span class="row-total"></span>
+    </li>
+  </template>
 
   <template id="line-template">
     <div class="line">

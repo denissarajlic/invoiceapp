@@ -31,7 +31,9 @@ const translations = {
     invoiceNumber: "No. {number}",
     cantSave: "Not saved. Fix the lines marked in red first.",
     saveFailed: "Not saved. The browser didn't allow it.",
-    savedCount: "Saved invoices: {count}",
+    invoicesTitle: "Invoices ({count})",
+    noInvoices: "No saved invoices yet.",
+    noClient: "(no client)",
   },
   bs: {
     languageName: "Bosanski",
@@ -61,7 +63,9 @@ const translations = {
     invoiceNumber: "Br. {number}",
     cantSave: "Nije sačuvano. Prvo ispravi stavke označene crvenom bojom.",
     saveFailed: "Nije sačuvano. Preglednik to nije dozvolio.",
-    savedCount: "Sačuvane fakture: {count}",
+    invoicesTitle: "Fakture ({count})",
+    noInvoices: "Još nema sačuvanih faktura.",
+    noClient: "(bez klijenta)",
   },
 };
 
