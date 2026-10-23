@@ -28,7 +28,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Decimals in quantity are allowed (e.g. `1.5`).
   - An invoice **with no lines** or **no client name** is still allowed.
 
-- [ ] **4. Saving**
+- [x] **4. Saving**
   - Invoices are still there after you close and reopen the app.
   - They're saved in the browser on the device, like clockapp. No account, no login.
   - Each device keeps its own invoices.

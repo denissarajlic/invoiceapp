@@ -36,6 +36,15 @@ Last updated: 23 Oct 2026
 - The message goes away as soon as you fix the problem.
 - An invoice with no lines or no client name is fine.
 
+## Saving
+- **Save** stores the invoice. You see "Invoice saved." and the form starts again as a new, empty invoice.
+- If any line has a problem, Save refuses: "Not saved. Fix the lines marked in red first." Every line is checked, including one you haven't left yet. The message goes away once the lines are fixed.
+- Pressing Enter in a field does not save.
+- Below the form: **Saved invoices: 3**, the number of invoices saved so far.
+- Invoices are still there after you close and reopen the browser.
+- They're saved in the browser on the device you use. There's no account and no login. Each device keeps its own invoices.
+- Clearing the browser's website data deletes the saved invoices.
+
 ## Language
 - The app works in **English** and **Bosnian**.
 - The **🌐** button at the top right switches between them.
@@ -43,6 +52,7 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
-- Nothing is saved yet. Reloading or closing the page empties the form.
+- Saved invoices can't be seen, opened or changed yet. You only see how many there are.
+- An invoice you haven't saved is lost if you reload or close the page.
 - Amounts use a dot for decimals and have no thousands separator yet (`1250.00 KM`, not `1.250,00 KM`).
-- A line with a problem is still counted in the totals. Since nothing can be saved yet, nothing stops you from keeping it.
+- A line with a problem is still counted in the totals on screen until you fix it.

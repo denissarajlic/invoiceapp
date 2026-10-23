@@ -26,6 +26,11 @@ const translations = {
     missingDescription: "Description is missing.",
     negativeQuantity: "Quantity can't be negative.",
     negativePrice: "Price can't be negative.",
+    save: "Save",
+    saved: "Invoice saved.",
+    cantSave: "Not saved. Fix the lines marked in red first.",
+    saveFailed: "Not saved. The browser didn't allow it.",
+    savedCount: "Saved invoices: {count}",
   },
   bs: {
     languageName: "Bosanski",
@@ -50,6 +55,11 @@ const translations = {
     missingDescription: "Nedostaje opis.",
     negativeQuantity: "Količina ne može biti negativna.",
     negativePrice: "Cijena ne može biti negativna.",
+    save: "Sačuvaj",
+    saved: "Faktura je sačuvana.",
+    cantSave: "Nije sačuvano. Prvo ispravi stavke označene crvenom bojom.",
+    saveFailed: "Nije sačuvano. Preglednik to nije dozvolio.",
+    savedCount: "Sačuvane fakture: {count}",
   },
 };
 

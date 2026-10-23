@@ -1,14 +1,21 @@
-// The invoice being filled in. Nothing is saved yet (that's Feature 4).
+// Saved invoices live in the browser under this name.
+const INVOICES_KEY = "invoices";
+
+// The invoice being filled in.
 // Prices are typed without VAT; the app adds 17% on top.
-const invoice = {
-  client: "",
-  date: todayText(),
-  currency: "KM",
-  lines: [newLine()],
-};
+let invoice = blankInvoice();
 
 const linesBox = document.getElementById("lines");
 const lineTemplate = document.getElementById("line-template");
+
+function blankInvoice() {
+  return {
+    client: "",
+    date: todayText(),
+    currency: "KM",
+    lines: [newLine()],
+  };
+}
 
 function newLine() {
   return { description: "", quantity: "1", price: "" };
@@ -88,6 +95,12 @@ function showProblems() {
     message.textContent = problems.map(t).join(" ");
     message.hidden = problems.length === 0;
   });
+
+  // Once every line is fixed, the "Not saved" message is no longer true.
+  const saveMessage = document.getElementById("save-message");
+  if (saveMessage.className === "error" && invoice.lines.every((line) => lineProblems(line).length === 0)) {
+    saveMessage.hidden = true;
+  }
 }
 
 // Draw all lines again. Only called when a line is added or removed,
@@ -123,14 +136,90 @@ function renderLines() {
   translatePage();
 }
 
+// All saved invoices, oldest first. An empty list if nothing is saved
+// or the browser won't let us read it.
+function loadInvoices() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(INVOICES_KEY));
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
+}
+
+function showSavedCount() {
+  const count = loadInvoices().length;
+  document.getElementById("saved-count").textContent = t("savedCount").replace("{count}", count);
+}
+
+// Show a short message under the Save button. Success messages fade after a few seconds.
+let messageTimer;
+function showMessage(key, isError) {
+  const message = document.getElementById("save-message");
+  message.textContent = t(key);
+  message.className = isError ? "error" : "success";
+  message.hidden = false;
+  clearTimeout(messageTimer);
+  if (!isError) {
+    messageTimer = setTimeout(() => { message.hidden = true; }, 3000);
+  }
+}
+
+function saveInvoice() {
+  // Check every line, including ones you haven't left yet.
+  invoice.lines.forEach((line) => visitedLines.add(line));
+  showProblems();
+  if (invoice.lines.some((line) => lineProblems(line).length > 0)) {
+    showMessage("cantSave", true);
+    return;
+  }
+
+  const invoices = loadInvoices();
+  invoices.push({
+    client: invoice.client.trim(),
+    date: invoice.date,
+    currency: invoice.currency,
+    lines: invoice.lines.map((line) => ({
+      description: line.description.trim(),
+      quantity: numberFrom(line.quantity),
+      price: numberFrom(line.price),
+    })),
+    savedAt: new Date().toISOString(),
+  });
+  try {
+    localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices));
+  } catch {
+    showMessage("saveFailed", true);
+    return;
+  }
+
+  // Start a fresh invoice.
+  invoice = blankInvoice();
+  fillForm();
+  renderLines();
+  showSavedCount();
+  showMessage("saved", false);
+}
+
+// Put the current invoice's client, date and currency into the form.
+function fillForm() {
+  document.getElementById("client").value = invoice.client;
+  document.getElementById("date").value = invoice.date;
+  document.getElementById("currency").value = invoice.currency;
+}
+
 function setUpForm() {
   const client = document.getElementById("client");
   const date = document.getElementById("date");
   const currency = document.getElementById("currency");
 
-  client.value = invoice.client;
-  date.value = invoice.date;
-  currency.value = invoice.currency;
+  fillForm();
+
+  document.getElementById("save").addEventListener("click", saveInvoice);
+  // Pressing Enter in a field must not save a half-finished invoice.
+  document.getElementById("invoice-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+  });
 
   client.addEventListener("input", () => { invoice.client = client.value; });
   date.addEventListener("input", () => { invoice.date = date.value; });
@@ -152,7 +241,10 @@ document.getElementById("language").addEventListener("click", () => {
   localStorage.setItem(LANGUAGE_KEY, language);
   translatePage();
   showProblems();
+  showSavedCount();
+  document.getElementById("save-message").hidden = true;
 });
 
 setUpForm();
 renderLines();
+showSavedCount();

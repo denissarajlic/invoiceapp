@@ -97,6 +97,26 @@ button.secondary {
   border: 1px dashed #0969da;
 }
 
+button.primary {
+  width: 100%;
+  margin-top: 20px;
+  background: #0969da;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 14px;
+}
+
+#save-message {
+  margin: 10px 0 0;
+  text-align: center;
+}
+
+.success {
+  color: #1a7f37;
+  font-weight: 600;
+}
+
 button.language {
   background: transparent;
   color: #59636e;
