@@ -1,0 +1,72 @@
+// All the app's text in English and Bosnian.
+// t("key") returns the text in the chosen language.
+const LANGUAGE_KEY = "language";
+
+const translations = {
+  en: {
+    languageName: "English",
+    changeLanguage: "Change language",
+    newInvoice: "New invoice",
+    client: "Client",
+    clientPlaceholder: "Client name",
+    date: "Date",
+    currency: "Currency",
+    lines: "Lines",
+    description: "Description",
+    descriptionPlaceholder: "e.g. Web design",
+    quantity: "Quantity",
+    price: "Price",
+    removeLine: "Remove line",
+    addLine: "+ Add line",
+    noLines: "No lines yet. Press \"+ Add line\".",
+  },
+  bs: {
+    languageName: "Bosanski",
+    changeLanguage: "Promijeni jezik",
+    newInvoice: "Nova faktura",
+    client: "Klijent",
+    clientPlaceholder: "Ime klijenta",
+    date: "Datum",
+    currency: "Valuta",
+    lines: "Stavke",
+    description: "Opis",
+    descriptionPlaceholder: "npr. Izrada web stranice",
+    quantity: "Količina",
+    price: "Cijena",
+    removeLine: "Ukloni stavku",
+    addLine: "+ Dodaj stavku",
+    noLines: "Još nema stavki. Pritisni \"+ Dodaj stavku\".",
+  },
+};
+
+// First visit: use the phone's or computer's language if it is Bosnian
+// (or close to it), otherwise English. After that, remember the choice.
+function startingLanguage() {
+  const saved = localStorage.getItem(LANGUAGE_KEY);
+  if (saved in translations) return saved;
+  const device = (navigator.language || "en").slice(0, 2);
+  return ["bs", "hr", "sr"].includes(device) ? "bs" : "en";
+}
+
+let language = startingLanguage();
+
+function t(key) {
+  return translations[language][key];
+}
+
+// Put the right text into every element marked with data-i18n.
+function translatePage() {
+  document.documentElement.lang = language;
+  for (const element of document.querySelectorAll("[data-i18n]")) {
+    element.textContent = t(element.dataset.i18n);
+  }
+  for (const element of document.querySelectorAll("[data-i18n-placeholder]")) {
+    element.placeholder = t(element.dataset.i18nPlaceholder);
+  }
+  for (const element of document.querySelectorAll("[data-i18n-title]")) {
+    element.title = t(element.dataset.i18nTitle);
+  }
+  for (const element of document.querySelectorAll("[data-i18n-label]")) {
+    element.setAttribute("aria-label", t(element.dataset.i18nLabel));
+  }
+}

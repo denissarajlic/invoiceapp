@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>My Invoice App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">My Invoice App</div>
+    <button id="language" class="language" data-i18n-title="changeLanguage">🌐 <span data-i18n="languageName">English</span></button>
+  </header>
+
+  <main>
+    <h1 data-i18n="newInvoice">New invoice</h1>
+
+    <form id="invoice-form" class="card">
+      <label>
+        <span data-i18n="client">Client</span>
+        <input id="client" type="text" data-i18n-placeholder="clientPlaceholder" placeholder="Client name" autocomplete="off">
+      </label>
+
+      <div class="row">
+        <label>
+          <span data-i18n="date">Date</span>
+          <input id="date" type="date">
+        </label>
+        <label>
+          <span data-i18n="currency">Currency</span>
+          <select id="currency">
+            <option value="KM">KM</option>
+            <option value="EUR">EUR</option>
+          </select>
+        </label>
+      </div>
+
+      <h2 data-i18n="lines">Lines</h2>
+      <div id="lines"></div>
+      <p id="no-lines" class="empty" data-i18n="noLines" hidden></p>
+      <button id="add-line" type="button" class="secondary" data-i18n="addLine">+ Add line</button>
+    </form>
+  </main>
+
+  <template id="line-template">
+    <div class="line">
+      <label class="line-description">
+        <span data-i18n="description">Description</span>
+        <input class="description" type="text" data-i18n-placeholder="descriptionPlaceholder" autocomplete="off">
+      </label>
+      <label>
+        <span data-i18n="quantity">Quantity</span>
+        <input class="quantity" type="number" step="any" inputmode="decimal">
+      </label>
+      <label>
+        <span data-i18n="price">Price</span>
+        <input class="price" type="number" step="any" inputmode="decimal">
+      </label>
+      <button type="button" class="remove" data-i18n-title="removeLine" data-i18n-label="removeLine">✕</button>
+    </div>
+  </template>
+
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

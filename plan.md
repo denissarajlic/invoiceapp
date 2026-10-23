@@ -8,7 +8,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
 
 ## Features
 
-- [ ] **1. Invoice form**
+- [x] **1. Invoice form**
   - Client name, invoice date (today by default), currency: **KM** or **EUR**.
   - Lines with **description**, **quantity** and **price**. Add or remove lines.
   - The app works in **English** and **Bosnian**, switched with the 🌐 button. This is built in from the start, so every later feature comes in both languages.
