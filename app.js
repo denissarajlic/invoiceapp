@@ -823,3 +823,9 @@ renderLines();
 renderInvoiceList();
 renderClients();
 showFormNote();
+
+// Keep a copy on the phone for offline use. Only works on the online
+// version, not when index.html is opened as a file.
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  navigator.serviceWorker.register("sw.js");
+}
