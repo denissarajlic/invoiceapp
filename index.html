@@ -65,17 +65,18 @@
       </label>
       <label>
         <span data-i18n="quantity">Quantity</span>
-        <input class="quantity" type="number" step="any" inputmode="decimal">
+        <input class="quantity" type="number" min="0" step="any" inputmode="decimal">
       </label>
       <label>
         <span data-i18n="price">Price</span>
-        <input class="price" type="number" step="any" inputmode="decimal">
+        <input class="price" type="number" min="0" step="any" inputmode="decimal">
       </label>
       <div class="line-amount">
         <span data-i18n="amount">Amount</span>
         <output class="amount"></output>
       </div>
       <button type="button" class="remove" data-i18n-title="removeLine" data-i18n-label="removeLine">✕</button>
+      <p class="line-error error" hidden></p>
     </div>
   </template>
 

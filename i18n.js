@@ -23,6 +23,9 @@ const translations = {
     withoutVat: "Amount without VAT",
     vat: "VAT 17%",
     total: "Total",
+    missingDescription: "Description is missing.",
+    negativeQuantity: "Quantity can't be negative.",
+    negativePrice: "Price can't be negative.",
   },
   bs: {
     languageName: "Bosanski",
@@ -44,6 +47,9 @@ const translations = {
     withoutVat: "Iznos bez PDV-a",
     vat: "PDV 17%",
     total: "Ukupno za platiti",
+    missingDescription: "Nedostaje opis.",
+    negativeQuantity: "Količina ne može biti negativna.",
+    negativePrice: "Cijena ne može biti negativna.",
   },
 };
 

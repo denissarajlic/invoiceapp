@@ -22,7 +22,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - The prices you type are **without** VAT.
   - Everything updates straight away as you type.
 
-- [ ] **3. Checking lines**
+- [x] **3. Checking lines**
   - The app refuses a line with an empty description, a negative quantity or a negative price, and shows which line has the problem.
   - A quantity or price of **0** is allowed.
   - Decimals in quantity are allowed (e.g. `1.5`).
@@ -32,6 +32,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Invoices are still there after you close and reopen the app.
   - They're saved in the browser on the device, like clockapp. No account, no login.
   - Each device keeps its own invoices.
+  - **Save** refuses to save while any line has a problem (from Feature 3).
 
 - [ ] **5. Invoice number**
   - Each new invoice gets the next number automatically: `2026-001`, `2026-002`, …

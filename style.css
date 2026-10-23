@@ -111,7 +111,8 @@ button.language {
   grid-template-areas:
     "description description description"
     "quantity    price       remove"
-    "amount      amount      amount";
+    "amount      amount      amount"
+    "error       error       error";
   gap: 8px 12px;
   align-items: end;
   padding: 12px 0;
@@ -182,6 +183,21 @@ button.remove {
   padding: 10px 12px;
 }
 
+input.invalid {
+  border-color: #cf222e;
+  background: #fff5f5;
+}
+
+.error {
+  color: #cf222e;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.line-error {
+  grid-area: error;
+}
+
 .empty {
   color: #59636e;
   font-size: 0.9rem;
@@ -196,7 +212,9 @@ button.remove {
 @media (min-width: 640px) {
   .line {
     grid-template-columns: 3fr 1fr 1fr 1.3fr auto;
-    grid-template-areas: "description quantity price amount remove";
+    grid-template-areas:
+      "description quantity price amount remove"
+      "error       error    error error  error";
   }
 
   .line-amount {

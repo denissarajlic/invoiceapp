@@ -26,6 +26,16 @@ Last updated: 23 Oct 2026
 - Amounts show the currency you picked, e.g. `292.50 KM` or `292.50 EUR`.
 - An empty quantity or price counts as 0.
 
+## Checking lines
+- The app checks every line while you type. A problem is shown in red under that line, and the wrong field gets a red border:
+  - **Description is missing.** (Nedostaje opis.)
+  - **Quantity can't be negative.** (Količina ne može biti negativna.)
+  - **Price can't be negative.** (Cijena ne može biti negativna.)
+- A new line doesn't complain about its empty description until you leave the line (for example, click somewhere else or add another line).
+- A quantity or price of **0** is fine, and so are decimals like `1.5`.
+- The message goes away as soon as you fix the problem.
+- An invoice with no lines or no client name is fine.
+
 ## Language
 - The app works in **English** and **Bosnian**.
 - The **🌐** button at the top right switches between them.
@@ -35,4 +45,4 @@ Last updated: 23 Oct 2026
 ## Known problems
 - Nothing is saved yet. Reloading or closing the page empties the form.
 - Amounts use a dot for decimals and have no thousands separator yet (`1250.00 KM`, not `1.250,00 KM`).
-- Negative quantities and prices are accepted and calculated. Nothing checks the lines yet.
+- A line with a problem is still counted in the totals. Since nothing can be saved yet, nothing stops you from keeping it.
