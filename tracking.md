@@ -57,7 +57,7 @@ Last updated: 23 Oct 2026
 - The month comes from the invoice date.
 - Picking a month shows only that month's invoices. The title counts only those, e.g. **Invoices (4)**.
 - With a month picked, a box shows that month's **amount without VAT**, **VAT 17%** and **total**. KM and EUR are added up separately.
-- The **Unpaid** total above it still counts all invoices, whatever month is picked.
+- The Summary boxes above it still count all invoices, whatever month is picked.
 - If you save an invoice from another month while a month is picked, the list switches to that invoice's month.
 - If the picked month has no invoices left (for example after deleting), the list goes back to All months.
 - The app doesn't remember the picked month. After reloading, it shows All months.
@@ -77,8 +77,7 @@ Last updated: 23 Oct 2026
 - **Mark as paid** / **Mark as unpaid** in the list switches it straight away.
 - In the form there's a **Paid** checkbox, next to the currency. Use it when you create or edit an invoice. It's saved when you press Save.
 - If you switch an invoice in the list while it's open in the form, the form's checkbox changes too.
-- Above the list: **Unpaid: 1.250,00 KM + 300,00 €**, the total with VAT of all unpaid invoices.
-- KM and EUR are added up separately, never mixed. A currency with nothing unpaid isn't shown. With nothing unpaid at all, it shows `0,00 KM`.
+- The total of all unpaid invoices is in the **Unpaid** box of the Summary.
 
 ## Clients
 - Under the client name there are two more fields: **Address** (Adresa) and **ID number (JIB)** (ID broj).
@@ -114,9 +113,20 @@ Last updated: 23 Oct 2026
 - An **unpaid** invoice whose due date has passed is **overdue**. Its label turns red and says how late it is: **Overdue · 12 days** (Kasni 12 dana). Its due date in the list turns red too.
 - An invoice due **today** isn't overdue yet. It becomes overdue tomorrow, at "1 day".
 - Marking an invoice as paid removes the overdue label.
-- Under "Unpaid", in red: **Overdue: …** (Kasni s plaćanjem), the total with VAT of all overdue invoices. KM and EUR are added up separately. With nothing overdue, it shows `0,00 KM`.
-- Like Unpaid, the Overdue total counts all invoices, whatever month is picked.
-- In the CSV export, the status column says "Overdue" (Kasni) for these invoices.
+- The total of all overdue invoices is in the **Overdue** box of the Summary.
+- In the CSV export, the status column says "Overdue" (Kasni s plaćanjem) for these invoices.
+
+## Summary
+- Above the invoice list: **Summary** (Pregled), with four boxes:
+  - **This month** (Ovaj mjesec): the total with VAT of all invoices dated this month, with the amount without VAT underneath ("w/o VAT" / "bez PDV-a").
+  - **This year** (Ova godina): the same for this year.
+  - **Unpaid** (Neplaćeno): the total with VAT of all unpaid invoices, including overdue ones.
+  - **Overdue** (Kasni s plaćanjem): the total with VAT of all overdue invoices. The box turns red when something is overdue.
+- This month and This year count paid and unpaid invoices. They go by invoice date, so an invoice dated later this month already counts.
+- KM and EUR are added up separately, each on its own line in the box. A currency with nothing in it isn't shown. With nothing at all, the box shows `0,00 KM`.
+- The boxes always count all invoices, whatever month is picked in the list.
+- They update straight away when you save, edit, delete or mark an invoice as paid.
+- On a phone the boxes are 2 × 2. On a wide screen they're 4 in a row.
 - The days are counted when the page loads or the list changes. If the page stays open past midnight, reload it to update them.
 
 ## Amount format

@@ -106,7 +106,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - An invoice due today isn't overdue yet. It becomes overdue tomorrow.
   - Shows the overdue total.
 
-- [ ] **19. Summary**
+- [x] **19. Summary**
   - Boxes at the top of the invoice list: **This month**, **This year**, **Unpaid**, **Overdue**.
   - This month and this year show both the amount without VAT and the total with VAT.
 

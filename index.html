@@ -96,9 +96,29 @@
     </form>
 
     <section class="invoices">
+      <h1 data-i18n="summary">Summary</h1>
+      <div class="summary">
+        <div class="summary-box">
+          <div class="summary-label" data-i18n="thisMonth">This month</div>
+          <div id="summary-month" class="summary-amount"></div>
+          <div id="summary-month-net" class="summary-net"></div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-label" data-i18n="thisYear">This year</div>
+          <div id="summary-year" class="summary-amount"></div>
+          <div id="summary-year-net" class="summary-net"></div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-label" data-i18n="unpaid">Unpaid</div>
+          <div id="summary-unpaid" class="summary-amount"></div>
+        </div>
+        <div id="summary-overdue-box" class="summary-box">
+          <div class="summary-label" data-i18n="overdue">Overdue</div>
+          <div id="summary-overdue" class="summary-amount"></div>
+        </div>
+      </div>
+
       <h1 id="invoices-title"></h1>
-      <p id="unpaid-total" class="unpaid-total"></p>
-      <p id="overdue-total" class="overdue-total"></p>
 
       <div class="list-tools">
         <label class="month-filter">

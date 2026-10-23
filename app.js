@@ -285,11 +285,8 @@ function renderInvoiceList() {
   const list = document.getElementById("invoice-list");
   const template = document.getElementById("invoice-row-template");
 
-  // Money still owed counts every invoice, whatever month is picked.
-  document.getElementById("unpaid-total").textContent =
-    t("unpaidTotal", { amount: formatTotals(totalsByCurrency(allInvoices.filter((saved) => !saved.paid))) });
-  document.getElementById("overdue-total").textContent =
-    t("overdueTotal", { amount: formatTotals(totalsByCurrency(allInvoices.filter((saved) => statusOf(saved) === "overdue"))) });
+  // The summary boxes count every invoice, whatever month is picked.
+  renderSummary(allInvoices);
 
   renderMonthFilter(allInvoices);
   const invoices = shownInvoices(allInvoices);
@@ -409,6 +406,46 @@ function statusOf(saved) {
 function overdueText(days) {
   const one = language === "bs" ? days % 10 === 1 && days % 100 !== 11 : days === 1;
   return t("overdueDays", { days, unit: t(one ? "day" : "days") });
+}
+
+// Put amounts per currency into a box, one currency per line:
+// { KM: 125000, EUR: 30000 } → "1.250,00 KM" and "300,00 €" on two lines.
+function showAmounts(id, sums, prefix = "") {
+  const box = document.getElementById(id);
+  const lines = formatTotals(sums).split(" + ");
+  box.replaceChildren(...lines.map((line) => {
+    const div = document.createElement("div");
+    div.textContent = prefix ? `${prefix} ${line}` : line;
+    return div;
+  }));
+}
+
+// Totals with and without VAT of some invoices, per currency.
+function sumsOf(invoices) {
+  const total = {};
+  const net = {};
+  for (const saved of invoices) {
+    const totals = totalsOf(saved.lines);
+    total[saved.currency] = (total[saved.currency] || 0) + totals.total;
+    net[saved.currency] = (net[saved.currency] || 0) + totals.subtotal;
+  }
+  return { total, net };
+}
+
+// The four boxes: this month, this year, unpaid and overdue.
+function renderSummary(allInvoices) {
+  const today = todayText();
+  const thisMonth = sumsOf(allInvoices.filter((saved) => monthOf(saved) === today.slice(0, 7)));
+  const thisYear = sumsOf(allInvoices.filter((saved) => (saved.date || "").slice(0, 4) === today.slice(0, 4)));
+  const overdue = allInvoices.filter((saved) => statusOf(saved) === "overdue");
+
+  showAmounts("summary-month", thisMonth.total);
+  showAmounts("summary-month-net", thisMonth.net, t("withoutVatShort"));
+  showAmounts("summary-year", thisYear.total);
+  showAmounts("summary-year-net", thisYear.net, t("withoutVatShort"));
+  showAmounts("summary-unpaid", totalsByCurrency(allInvoices.filter((saved) => !saved.paid)));
+  showAmounts("summary-overdue", totalsByCurrency(overdue));
+  document.getElementById("summary-overdue-box").classList.toggle("has-overdue", overdue.length > 0);
 }
 
 // Add up the totals (with VAT) of some invoices, separately per currency:
