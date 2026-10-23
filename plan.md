@@ -110,7 +110,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Boxes at the top of the invoice list: **This month**, **This year**, **Unpaid**, **Overdue**.
   - This month and this year show both the amount without VAT and the total with VAT.
 
-- [ ] **20. Install it like an app**
+- [x] **20. Install it like an app**
   - Online on GitHub Pages, like clockapp.
   - iPhone: Safari → Share → Add to Home Screen. Android and Windows: **Install app** in Chrome or Edge.
   - Opens full screen with its own icon and works offline.

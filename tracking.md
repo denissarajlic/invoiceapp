@@ -191,6 +191,17 @@ Last updated: 23 Oct 2026
 - Changing it updates every amount on the page straight away, including saved invoices in the list.
 - The app remembers your choice.
 
+## Using it like an app
+- The app is online at https://denissarajlic.github.io/invoiceapp/
+- **iPhone:** open the link in Safari, tap Share, then **Add to Home Screen**. **Android:** in Chrome, tap **Install app**. **Windows:** in Chrome or Edge, click the install icon in the address bar.
+- Installed, it gets its own icon (a white invoice on blue) and the name "Invoices", and it opens full screen without the browser's address bar.
+- It keeps a copy of itself on the device. After you've opened it once with internet, it also opens and works without internet.
+- With internet, it always loads the newest version. A device gets a change only after it has been pushed to GitHub (`git push`). If an update doesn't show, close the app fully and open it again.
+- Offline mode and installing only work on the online version. Opening `index.html` as a file on the computer works as before, but without them.
+- The browser tab also shows the invoice icon.
+- On iPhone, the home-screen app and Safari keep **separate** invoices. Pick one and stick with it.
+- The online invoiceapp and clockapp share the language choice: switching one to Bosnian switches the other too. Their data stays separate.
+
 ## Language
 - The app works in **English** and **Bosnian**.
 - The **🌐** button at the top right switches between them.
