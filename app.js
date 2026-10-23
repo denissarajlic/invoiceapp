@@ -1,6 +1,7 @@
 // Saved invoices live in the browser under this name.
 const INVOICES_KEY = "invoices";
 const LAST_NUMBERS_KEY = "lastInvoiceNumbers";
+const EURO_SYMBOL_KEY = "euroSymbol";
 
 // A new invoice is due this many days after its date.
 const DAYS_TO_PAY = 15;
@@ -78,9 +79,20 @@ function totalsOf(lines) {
   return { subtotal, vat, total: subtotal + vat };
 }
 
-// "292.50 KM". The Bosnian style (292,50 KM) comes in Feature 8.
+// How euros are written: "EUR" or "€". Chosen in Settings.
+let euroChoice = localStorage.getItem(EURO_SYMBOL_KEY) === "€" ? "€" : "EUR";
+
+function euroSymbol() {
+  return euroChoice;
+}
+
+// Bosnian style: 125000 cents → "1.250,00 KM", or "1.250,00 €" for euros.
 function formatMoney(cents, currency = invoice.currency) {
-  return `${(cents / 100).toFixed(2)} ${currency}`;
+  const sign = cents < 0 ? "-" : "";
+  const [whole, decimals] = (Math.abs(cents) / 100).toFixed(2).split(".");
+  const withDots = whole.replace(/\B(?=(\d{3})+$)/g, ".");
+  const symbol = currency === "EUR" ? euroSymbol() : currency;
+  return `${sign}${withDots},${decimals} ${symbol}`;
 }
 
 // "2026-10-23" → "23.10.2026."
@@ -395,6 +407,22 @@ function setUpForm() {
   });
 }
 
+function setUpSettings() {
+  const choice = document.getElementById("euro-symbol");
+  choice.value = euroSymbol();
+  choice.addEventListener("change", () => {
+    euroChoice = choice.value;
+    try {
+      localStorage.setItem(EURO_SYMBOL_KEY, choice.value);
+    } catch {
+      // Not remembered, but still used until the page is closed.
+    }
+    // Show every amount again with the new symbol.
+    updateTotals();
+    renderInvoiceList();
+  });
+}
+
 document.getElementById("language").addEventListener("click", () => {
   language = language === "en" ? "bs" : "en";
   localStorage.setItem(LANGUAGE_KEY, language);
@@ -407,5 +435,6 @@ document.getElementById("language").addEventListener("click", () => {
 
 numberOldInvoices();
 setUpForm();
+setUpSettings();
 renderLines();
 renderInvoiceList();

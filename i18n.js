@@ -36,6 +36,8 @@ const translations = {
     invoicesTitle: "Invoices ({count})",
     noInvoices: "No saved invoices yet.",
     noClient: "(no client)",
+    settings: "⚙ Settings",
+    euroSymbol: "Show euros as",
   },
   bs: {
     languageName: "Bosanski",
@@ -70,6 +72,8 @@ const translations = {
     invoicesTitle: "Fakture ({count})",
     noInvoices: "Još nema sačuvanih faktura.",
     noClient: "(bez klijenta)",
+    settings: "⚙ Postavke",
+    euroSymbol: "Prikaži eure kao",
   },
 };
 

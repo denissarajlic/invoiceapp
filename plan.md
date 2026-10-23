@@ -48,7 +48,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - A due date before the invoice date is allowed.
   - Shown in the invoice list too.
 
-- [ ] **8. Amount format**
+- [x] **8. Amount format**
   - Two decimals and the currency, Bosnian style: `1.250,00 KM`.
   - For euros, Settings lets you choose `EUR` or `€`.
   - Prices are typed with a dot: `12.50`.

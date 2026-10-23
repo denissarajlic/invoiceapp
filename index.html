@@ -74,6 +74,17 @@
       <ul id="invoice-list" class="invoice-list"></ul>
       <p id="no-invoices" class="empty" data-i18n="noInvoices" hidden></p>
     </section>
+
+    <details class="settings card">
+      <summary data-i18n="settings">Settings</summary>
+      <label>
+        <span data-i18n="euroSymbol">Show euros as</span>
+        <select id="euro-symbol">
+          <option value="EUR">1.250,00 EUR</option>
+          <option value="€">1.250,00 €</option>
+        </select>
+      </label>
+    </details>
   </main>
 
   <template id="invoice-row-template">

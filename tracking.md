@@ -23,8 +23,14 @@ Last updated: 23 Oct 2026
 - The prices you type are without VAT. The app adds the 17% on top.
 - Every amount is rounded to 2 decimals. VAT is worked out from the rounded line amounts.
 - Everything updates straight away as you type, and when you add or remove a line.
-- Amounts show the currency you picked, e.g. `292.50 KM` or `292.50 EUR`.
 - An empty quantity or price counts as 0.
+
+## Amount format
+- Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
+- This is the same in English and in Bosnian.
+- It's used everywhere: line amounts, the three totals and the invoice list.
+- Euros are shown as `1.250,00 EUR` or `1.250,00 €`, whichever you choose in Settings.
+- Prices are still **typed** with a dot, like `12.50`.
 
 ## Checking lines
 - The app checks every line while you type. A problem is shown in red under that line, and the wrong field gets a red border:
@@ -37,7 +43,7 @@ Last updated: 23 Oct 2026
 - An invoice with no lines or no client name is fine.
 
 ## Saving
-- **Save** stores the invoice. You see "Invoice saved." and the form starts again as a new, empty invoice.
+- **Save** stores the invoice. You see "Invoice 2026-004 saved." and the form starts again as a new, empty invoice.
 - If any line has a problem, Save refuses: "Not saved. Fix the lines marked in red first." Every line is checked, including one you haven't left yet. The message goes away once the lines are fixed.
 - Pressing Enter in a field does not save.
 - Invoices are still there after you close and reopen the browser.
@@ -70,6 +76,12 @@ Last updated: 23 Oct 2026
 - With no saved invoices, it says "No saved invoices yet."
 - On a phone, each invoice takes three rows: number and total on top, then the client on the left with the date and due date on the right. On a wide screen, each invoice is one row.
 
+## Settings
+- **⚙ Settings** (Postavke) is at the bottom of the page. Tap it to open or close it.
+- **Show euros as:** `1.250,00 EUR` or `1.250,00 €`. It starts as EUR.
+- Changing it updates every amount on the page straight away, including saved invoices in the list.
+- The app remembers your choice.
+
 ## Language
 - The app works in **English** and **Bosnian**.
 - The **🌐** button at the top right switches between them.
@@ -79,5 +91,4 @@ Last updated: 23 Oct 2026
 ## Known problems
 - Saved invoices can't be opened, changed or deleted yet. Tapping one in the list does nothing.
 - An invoice you haven't saved is lost if you reload or close the page.
-- Amounts use a dot for decimals and have no thousands separator yet (`1250.00 KM`, not `1.250,00 KM`).
 - A line with a problem is still counted in the totals on screen until you fix it.

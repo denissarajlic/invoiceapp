@@ -315,6 +315,24 @@ input.invalid {
   }
 }
 
+/* Settings, folded away at the bottom of the page. */
+.settings {
+  margin-top: 32px;
+}
+
+.settings summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.settings[open] summary {
+  margin-bottom: 16px;
+}
+
+.settings label {
+  margin-bottom: 0;
+}
+
 .empty {
   color: #59636e;
   font-size: 0.9rem;
