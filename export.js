@@ -35,7 +35,7 @@ function invoicesToCsv(invoices) {
       csvAmount(vat),
       csvAmount(total),
       saved.currency,
-      t(saved.paid ? "paid" : "unpaid"),
+      t(statusOf(saved)),
     ];
   });
   // Windows line endings, which Excel likes best.
