@@ -33,6 +33,18 @@ Last updated: 23 Oct 2026
 - **Cancel** throws the copy away and starts a new, empty invoice. No number is used up.
 - If you've already typed something into the form, the app asks first whether to throw it away and open the copy.
 
+## Edit an invoice
+- Each invoice in the list has an **Edit** button (Uredi), next to Duplicate.
+- It opens the invoice in the form. The title says **Edit invoice** (Uredi fakturu), and the page scrolls up to it.
+- Above the form it says **Editing 2026-003** (Uređuješ fakturu 2026-003), with a **Cancel** button. The invoice is also highlighted in blue in the list.
+- You can change everything: client, date, due date, currency and lines.
+- The invoice **keeps its number**, even if you change the date to another year.
+- The due date stays as it was saved, even if you change the invoice date. You can still change the due date yourself.
+- **Save** replaces the old version: "Invoice 2026-003 updated." The form then starts a new, empty invoice.
+- **Cancel** throws the changes away. The saved invoice stays as it was.
+- The same line checks apply: a line with a problem can't be saved.
+- If you've already typed something into the form, the app asks first whether to throw it away.
+
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
 - This is the same in English and in Bosnian.
@@ -97,6 +109,6 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
-- Saved invoices can't be changed or deleted yet. Only Duplicate works in the list.
+- Saved invoices can't be deleted yet.
 - An invoice you haven't saved is lost if you reload or close the page.
 - A line with a problem is still counted in the totals on screen until you fix it.

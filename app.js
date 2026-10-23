@@ -236,9 +236,10 @@ function nextNumber(date) {
 }
 
 // Show the number this invoice will get when you save it.
+// An invoice being edited keeps its own number.
 function showNextNumber() {
   document.getElementById("invoice-number").textContent =
-    t("invoiceNumber", { number: nextNumber(invoice.date) });
+    t("invoiceNumber", { number: invoice.editing || nextNumber(invoice.date) });
 }
 
 // Invoices saved before numbers existed get one, in the order they were saved.
@@ -294,6 +295,11 @@ function renderInvoiceList() {
     const due = dueDateOf(saved);
     row.querySelector(".row-due").textContent = due ? t("dueOn", { date: formatDate(due) }) : "";
     row.querySelector(".row-total").textContent = formatMoney(totalsOf(saved.lines).total, saved.currency);
+    row.dataset.number = saved.number;
+    row.classList.toggle("editing", saved.number === invoice.editing);
+    const edit = row.querySelector(".edit");
+    edit.textContent = t("edit");
+    edit.addEventListener("click", () => editInvoice(saved));
     const duplicate = row.querySelector(".duplicate");
     duplicate.textContent = t("duplicate");
     duplicate.addEventListener("click", () => duplicateInvoice(saved));
@@ -307,12 +313,12 @@ function formHasContent() {
     invoice.lines.some((line) => line.description.trim() !== "" || line.price !== "");
 }
 
-// Put another invoice into the form, e.g. a copy, and scroll up to it.
+// Put another invoice into the form (a copy, one to edit, or a new one) and scroll up to it.
 function openInForm(newInvoice) {
   invoice = newInvoice;
   fillForm();
   renderLines();
-  showCopyNote();
+  showFormNote();
   document.getElementById("save-message").hidden = true;
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -332,12 +338,41 @@ function duplicateInvoice(saved) {
   openInForm(copy);
 }
 
-// "Copy of 2026-001" above the form, with a Cancel button.
-function showCopyNote() {
-  const note = document.getElementById("copy-note");
-  note.hidden = !invoice.copyOf;
-  if (invoice.copyOf) {
-    document.getElementById("copy-of").textContent = t("copyOf", { number: invoice.copyOf });
+// Open a saved invoice in the form to change it. Nothing changes until you press Save.
+function editInvoice(saved) {
+  if (formHasContent() && !confirm(t("confirmReplace"))) return;
+  const opened = blankInvoice();
+  opened.editing = saved.number;
+  opened.client = saved.client;
+  opened.date = saved.date;
+  opened.dueDate = dueDateOf(saved);
+  // The saved due date stays, even if you change the date.
+  opened.dueDateChanged = true;
+  opened.currency = saved.currency;
+  opened.lines = saved.lines.map((line) => ({
+    description: line.description,
+    quantity: String(line.quantity),
+    price: String(line.price),
+  }));
+  openInForm(opened);
+}
+
+// Above the form: "Copy of 2026-001" or "Editing 2026-003", with a Cancel button.
+// The title also says whether this is a new invoice or one being edited.
+function showFormNote() {
+  document.getElementById("form-title").textContent = t(invoice.editing ? "editInvoice" : "newInvoice");
+
+  const note = document.getElementById("form-note");
+  note.hidden = !invoice.copyOf && !invoice.editing;
+  if (invoice.editing) {
+    document.getElementById("form-note-text").textContent = t("editing", { number: invoice.editing });
+  } else if (invoice.copyOf) {
+    document.getElementById("form-note-text").textContent = t("copyOf", { number: invoice.copyOf });
+  }
+
+  // Mark the invoice being edited in the list.
+  for (const row of document.querySelectorAll(".invoice-row")) {
+    row.classList.toggle("editing", row.dataset.number === invoice.editing);
   }
 }
 
@@ -363,16 +398,9 @@ function saveInvoice() {
     return;
   }
 
-  // The number is only used up now, when the invoice is really saved.
   const invoices = loadInvoices();
   const lastNumbers = loadLastNumbers();
-  const year = yearOf(invoice.date);
-  const count = lastNumberIn(year, invoices, lastNumbers) + 1;
-  const number = numberText(year, count);
-  lastNumbers[year] = count;
-
-  invoices.push({
-    number,
+  const toSave = {
     client: invoice.client.trim(),
     date: invoice.date,
     dueDate: invoice.dueDate,
@@ -382,8 +410,30 @@ function saveInvoice() {
       quantity: numberFrom(line.quantity),
       price: numberFrom(line.price),
     })),
-    savedAt: new Date().toISOString(),
-  });
+  };
+
+  let number;
+  let messageKey;
+  const editedIndex = invoices.findIndex((saved) => saved.number === invoice.editing);
+  if (invoice.editing && editedIndex !== -1) {
+    // An existing invoice keeps its number; the new version replaces the old one.
+    number = invoice.editing;
+    messageKey = "updated";
+    invoices[editedIndex] = {
+      ...invoices[editedIndex],
+      ...toSave,
+      updatedAt: new Date().toISOString(),
+    };
+  } else {
+    // The number is only used up now, when the invoice is really saved.
+    const year = yearOf(invoice.date);
+    const count = lastNumberIn(year, invoices, lastNumbers) + 1;
+    number = numberText(year, count);
+    lastNumbers[year] = count;
+    messageKey = "saved";
+    invoices.push({ number, ...toSave, savedAt: new Date().toISOString() });
+  }
+
   try {
     localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices));
     localStorage.setItem(LAST_NUMBERS_KEY, JSON.stringify(lastNumbers));
@@ -396,9 +446,9 @@ function saveInvoice() {
   invoice = blankInvoice();
   fillForm();
   renderLines();
-  showCopyNote();
+  showFormNote();
   renderInvoiceList();
-  showMessage("saved", false, { number });
+  showMessage(messageKey, false, { number });
 }
 
 // Put the current invoice's client, date and currency into the form.
@@ -419,8 +469,9 @@ function setUpForm() {
   fillForm();
 
   document.getElementById("save").addEventListener("click", saveInvoice);
-  // Throw the copy away and start a new, empty invoice. No number is used up.
-  document.getElementById("cancel-copy").addEventListener("click", () => {
+  // Throw the copy or the changes away and start a new, empty invoice.
+  // No number is used up, and an edited invoice stays as it was saved.
+  document.getElementById("cancel-form").addEventListener("click", () => {
     openInForm(blankInvoice());
   });
   // Pressing Enter in a field must not save a half-finished invoice.
@@ -435,7 +486,7 @@ function setUpForm() {
       invoice.dueDate = addDays(invoice.date, DAYS_TO_PAY);
       dueDate.value = invoice.dueDate;
     }
-    // A date in another year changes the number, e.g. 2025-… instead of 2026-…
+    // For a new invoice, a date in another year changes the number, e.g. 2025-… instead of 2026-…
     showNextNumber();
   });
   dueDate.addEventListener("input", () => {
@@ -478,7 +529,7 @@ document.getElementById("language").addEventListener("click", () => {
   showProblems();
   renderInvoiceList();
   showNextNumber();
-  showCopyNote();
+  showFormNote();
   document.getElementById("save-message").hidden = true;
 });
 
@@ -487,3 +538,4 @@ setUpForm();
 setUpSettings();
 renderLines();
 renderInvoiceList();
+showFormNote();

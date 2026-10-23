@@ -14,13 +14,13 @@
 
   <main>
     <div class="title">
-      <h1 data-i18n="newInvoice">New invoice</h1>
+      <h1 id="form-title">New invoice</h1>
       <span id="invoice-number" class="invoice-number"></span>
     </div>
 
-    <p id="copy-note" class="copy-note" hidden>
-      <span id="copy-of"></span>
-      <button id="cancel-copy" type="button" data-i18n="cancel">Cancel</button>
+    <p id="form-note" class="form-note" hidden>
+      <span id="form-note-text"></span>
+      <button id="cancel-form" type="button" data-i18n="cancel">Cancel</button>
     </p>
 
     <form id="invoice-form" class="card">
@@ -100,6 +100,7 @@
       <span class="row-due"></span>
       <span class="row-total"></span>
       <span class="row-actions">
+        <button type="button" class="edit link"></button>
         <button type="button" class="duplicate link"></button>
       </span>
     </li>

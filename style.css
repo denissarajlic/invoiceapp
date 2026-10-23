@@ -307,6 +307,12 @@ input.invalid {
   font-variant-numeric: tabular-nums;
 }
 
+/* The invoice that's open in the form right now. */
+.invoice-row.editing {
+  background: #ddf4ff;
+  box-shadow: inset 4px 0 0 #0969da;
+}
+
 .row-actions {
   grid-area: actions;
   display: flex;
@@ -336,8 +342,8 @@ button.link:hover {
   }
 }
 
-/* "Copy of 2026-001" with Cancel, above the form. */
-.copy-note {
+/* "Copy of 2026-001" or "Editing 2026-003" with Cancel, above the form. */
+.form-note {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -351,11 +357,11 @@ button.link:hover {
   font-weight: 500;
 }
 
-.copy-note[hidden] {
+.form-note[hidden] {
   display: none;
 }
 
-.copy-note button {
+.form-note button {
   background: #fff;
   color: #1f2328;
   border: 1px solid #d0d7de;

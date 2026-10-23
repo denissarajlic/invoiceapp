@@ -58,7 +58,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - The copy opens in the form first and is only saved when you press **Save**.
   - If you cancel, the number is not used up.
 
-- [ ] **10. Edit an invoice**
+- [x] **10. Edit an invoice**
   - Open an invoice, change anything, then **Save** or **Cancel**.
   - The invoice number can't be changed.
   - The same checks as in Feature 3 apply.
