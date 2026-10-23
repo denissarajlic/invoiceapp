@@ -2,6 +2,9 @@
 const INVOICES_KEY = "invoices";
 const LAST_NUMBERS_KEY = "lastInvoiceNumbers";
 
+// A new invoice is due this many days after its date.
+const DAYS_TO_PAY = 15;
+
 // The invoice being filled in.
 // Prices are typed without VAT; the app adds 17% on top.
 let invoice = blankInvoice();
@@ -10,24 +13,45 @@ const linesBox = document.getElementById("lines");
 const lineTemplate = document.getElementById("line-template");
 
 function blankInvoice() {
+  const date = todayText();
   return {
     client: "",
-    date: todayText(),
+    date,
+    dueDate: addDays(date, DAYS_TO_PAY),
+    // Becomes true once you pick a due date yourself. Until then the due date
+    // moves along when you change the invoice date.
+    dueDateChanged: false,
     currency: "KM",
     lines: [newLine()],
   };
+}
+
+// "2026-10-23" + 15 days → "2026-11-07". Empty if there's no date.
+function addDays(date, days) {
+  if (!date) return "";
+  const [year, month, day] = date.split("-").map(Number);
+  return dateText(new Date(year, month - 1, day + days));
+}
+
+// A date as "2026-10-23", the format a date field uses.
+function dateText(date) {
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${date.getFullYear()}-${month}-${day}`;
+}
+
+// Invoices saved before due dates existed are due 15 days after their date.
+function dueDateOf(saved) {
+  return saved.dueDate || addDays(saved.date, DAYS_TO_PAY);
 }
 
 function newLine() {
   return { description: "", quantity: "1", price: "" };
 }
 
-// Today's date as "2026-10-23", the format a date field uses.
+// Today's date as "2026-10-23".
 function todayText() {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${now.getFullYear()}-${month}-${day}`;
+  return dateText(new Date());
 }
 
 const VAT_RATE = 0.17;
@@ -255,6 +279,8 @@ function renderInvoiceList() {
     client.textContent = saved.client || t("noClient");
     client.classList.toggle("missing", !saved.client);
     row.querySelector(".row-date").textContent = formatDate(saved.date);
+    const due = dueDateOf(saved);
+    row.querySelector(".row-due").textContent = due ? t("dueOn", { date: formatDate(due) }) : "";
     row.querySelector(".row-total").textContent = formatMoney(totalsOf(saved.lines).total, saved.currency);
     list.append(row);
   }
@@ -294,6 +320,7 @@ function saveInvoice() {
     number,
     client: invoice.client.trim(),
     date: invoice.date,
+    dueDate: invoice.dueDate,
     currency: invoice.currency,
     lines: invoice.lines.map((line) => ({
       description: line.description.trim(),
@@ -322,6 +349,7 @@ function saveInvoice() {
 function fillForm() {
   document.getElementById("client").value = invoice.client;
   document.getElementById("date").value = invoice.date;
+  document.getElementById("due-date").value = invoice.dueDate;
   document.getElementById("currency").value = invoice.currency;
   showNextNumber();
 }
@@ -329,6 +357,7 @@ function fillForm() {
 function setUpForm() {
   const client = document.getElementById("client");
   const date = document.getElementById("date");
+  const dueDate = document.getElementById("due-date");
   const currency = document.getElementById("currency");
 
   fillForm();
@@ -342,8 +371,16 @@ function setUpForm() {
   client.addEventListener("input", () => { invoice.client = client.value; });
   date.addEventListener("input", () => {
     invoice.date = date.value;
+    if (!invoice.dueDateChanged) {
+      invoice.dueDate = addDays(invoice.date, DAYS_TO_PAY);
+      dueDate.value = invoice.dueDate;
+    }
     // A date in another year changes the number, e.g. 2025-… instead of 2026-…
     showNextNumber();
+  });
+  dueDate.addEventListener("input", () => {
+    invoice.dueDate = dueDate.value;
+    invoice.dueDateChanged = true;
   });
   currency.addEventListener("change", () => {
     invoice.currency = currency.value;

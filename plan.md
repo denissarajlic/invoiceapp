@@ -40,9 +40,9 @@ We build one feature at a time, in this order. Each feature gets its own commit,
 
 - [x] **6. Invoice list**
   - All invoices, sorted by number, newest first.
-  - Each row shows number, client, date and total. (The due date is added in Feature 7.)
+  - Each row shows number, client, date, due date and total.
 
-- [ ] **7. Due date**
+- [x] **7. Due date**
   - Set automatically to 15 days after the invoice date. It can be changed by hand.
   - If the invoice date is changed later, the due date stays as it is.
   - A due date before the invoice date is allowed.

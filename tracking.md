@@ -53,14 +53,22 @@ Last updated: 23 Oct 2026
 - The app remembers the last number it gave out in each year, so a number is never given out twice.
 - Invoices saved before numbering existed got numbers automatically, in the order they were saved.
 
+## Due date
+- Each invoice has a **due date** (Rok plaćanja), next to the date.
+- A new invoice is due **15 days after the invoice date**.
+- Until you change the due date yourself, it moves along when you change the invoice date.
+- Once you've changed it yourself, it stays as you set it, even if you change the invoice date afterwards.
+- A due date before the invoice date is allowed.
+- Invoices saved before due dates existed are shown as due 15 days after their date.
+
 ## Invoice list
 - Under the form: **Invoices (3)** (Fakture), with every saved invoice.
 - Sorted by number, newest first. `2026-010` comes before `2026-009`, and 2026 invoices come before 2025 ones.
-- Each invoice shows its **number**, **client**, **date** (like `23.10.2026.`) and **total** with VAT, in its own currency.
+- Each invoice shows its **number**, **client**, **date** (like `23.10.2026.`), **due date** (like "Due 07.11.2026." / "Rok 07.11.2026.") and **total** with VAT, in its own currency.
 - An invoice without a client name shows "(no client)" (bez klijenta) in grey.
 - A newly saved invoice appears at the top of the list straight away.
 - With no saved invoices, it says "No saved invoices yet."
-- On a phone, each invoice takes two rows: number and total on top, client and date below. On a computer, each invoice is one row.
+- On a phone, each invoice takes three rows: number and total on top, then the client on the left with the date and due date on the right. On a wide screen, each invoice is one row.
 
 ## Language
 - The app works in **English** and **Bosnian**.
