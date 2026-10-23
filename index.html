@@ -110,6 +110,30 @@
 
     <details class="settings card">
       <summary data-i18n="settings">Settings</summary>
+
+      <h2 data-i18n="yourBusiness">Your business</h2>
+      <p class="hint" data-i18n="yourBusinessHint"></p>
+      <label>
+        <span data-i18n="businessName">Business name</span>
+        <input id="business-name" type="text" autocomplete="organization">
+      </label>
+      <label>
+        <span data-i18n="address">Address</span>
+        <input id="business-address" type="text" autocomplete="street-address">
+      </label>
+      <div class="row">
+        <label>
+          <span data-i18n="jib">ID number (JIB)</span>
+          <input id="business-jib" type="text" inputmode="numeric" autocomplete="off">
+        </label>
+        <label>
+          <span data-i18n="bankAccount">Bank account</span>
+          <input id="business-bank" type="text" autocomplete="off">
+        </label>
+      </div>
+      <p id="business-saved" class="hint"></p>
+
+      <h2 data-i18n="display">Display</h2>
       <label>
         <span data-i18n="euroSymbol">Show euros as</span>
         <select id="euro-symbol">

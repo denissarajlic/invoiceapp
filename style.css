@@ -686,3 +686,18 @@ textarea {
     white-space: pre-line;
   }
 }
+
+/* Small grey help text, e.g. in Settings. */
+.hint {
+  color: #59636e;
+  font-size: 0.85rem;
+  margin: -4px 0 12px;
+}
+
+.settings h2:first-of-type {
+  margin-top: 0;
+}
+
+#business-saved:empty {
+  display: none;
+}

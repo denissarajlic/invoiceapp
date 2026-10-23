@@ -632,6 +632,36 @@ function setUpSettings() {
     updateTotals();
     renderInvoiceList();
   });
+
+  // Your business details are saved as you type.
+  const business = loadBusiness();
+  const savedNote = document.getElementById("business-saved");
+  for (const field of BUSINESS_FIELDS) {
+    const input = document.getElementById(`business-${field}`);
+    input.value = business[field] || "";
+    input.addEventListener("input", () => {
+      business[field] = input.value;
+      try {
+        localStorage.setItem(BUSINESS_KEY, JSON.stringify(business));
+        savedNote.textContent = t("savedAutomatically");
+      } catch {
+        savedNote.textContent = t("saveFailed");
+      }
+    });
+  }
+}
+
+// Your own name, address, JIB and bank account, printed on every invoice.
+const BUSINESS_KEY = "business";
+const BUSINESS_FIELDS = ["name", "address", "jib", "bank"];
+
+function loadBusiness() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(BUSINESS_KEY));
+    return saved && typeof saved === "object" ? saved : {};
+  } catch {
+    return {};
+  }
 }
 
 document.getElementById("language").addEventListener("click", () => {
@@ -644,6 +674,7 @@ document.getElementById("language").addEventListener("click", () => {
   showNextNumber();
   showFormNote();
   document.getElementById("save-message").hidden = true;
+  document.getElementById("business-saved").textContent = "";
 });
 
 numberOldInvoices();

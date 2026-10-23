@@ -15,9 +15,15 @@ function formatQuantity(quantity) {
   return quantity.toLocaleString("de-DE", { maximumFractionDigits: 3 });
 }
 
-// Your business details, top left. Empty until Settings has them (Feature 15).
+// Your business details from Settings, top left. Empty fields are left out.
 function printSeller() {
-  return el("div", "print-seller");
+  const seller = el("div", "print-seller");
+  const business = loadBusiness();
+  if (business.name) seller.append(el("div", "print-seller-name", business.name));
+  if (business.address) seller.append(el("div", "", business.address));
+  if (business.jib) seller.append(el("div", "", `JIB ${business.jib}`));
+  if (business.bank) seller.append(el("div", "", `${t("bankAccount")}: ${business.bank}`));
+  return seller;
 }
 
 // Number, date and due date, top right.

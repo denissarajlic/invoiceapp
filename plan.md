@@ -86,7 +86,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Printed in the language the app is in.
   - An optional note at the bottom, e.g. "Please include the invoice number when you pay".
 
-- [ ] **15. Settings (your business details)**
+- [x] **15. Settings (your business details)**
   - Business name, address, ID number (JIB), bank account.
   - Entered once and used on every invoice: they fill the empty top-left corner of the printout from Feature 14.
   - Also holds the `EUR` / `€` choice.

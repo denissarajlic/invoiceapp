@@ -68,6 +68,12 @@ const translations = {
     confirmReplace: "Throw away the invoice you're filling in and open the copy instead?",
     settings: "⚙ Settings",
     euroSymbol: "Show euros as",
+    yourBusiness: "Your business",
+    yourBusinessHint: "Printed at the top of every invoice.",
+    businessName: "Business name",
+    bankAccount: "Bank account",
+    savedAutomatically: "✓ Saved automatically",
+    display: "Display",
   },
   bs: {
     languageName: "Bosanski",
@@ -134,6 +140,12 @@ const translations = {
     confirmReplace: "Odbaciti fakturu koju popunjavaš i otvoriti kopiju?",
     settings: "⚙ Postavke",
     euroSymbol: "Prikaži eure kao",
+    yourBusiness: "Tvoja firma",
+    yourBusinessHint: "Štampa se na vrhu svake fakture.",
+    businessName: "Naziv firme",
+    bankAccount: "Žiro račun",
+    savedAutomatically: "✓ Automatski sačuvano",
+    display: "Prikaz",
   },
 };
 

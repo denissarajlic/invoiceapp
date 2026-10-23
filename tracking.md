@@ -80,6 +80,7 @@ Last updated: 23 Oct 2026
 ## Print / PDF
 - Each invoice in the list has a **Print** button (Štampaj). It opens the browser's print window.
 - The printout shows only the invoice, with no buttons or menus, on an A4 page:
+  - top left: your business details from Settings
   - top right: **Invoice** (Faktura), with the invoice number, date and due date
   - **Bill to** (Kupac): the client's name, address and JIB, as saved on the invoice
   - a table of the lines: number, description, quantity, price and amount
@@ -144,6 +145,10 @@ Last updated: 23 Oct 2026
 
 ## Settings
 - **⚙ Settings** (Postavke) is at the bottom of the page. Tap it to open or close it.
+- **Your business** (Tvoja firma): business name, address, ID number (JIB) and bank account (žiro račun).
+  - They're saved automatically as you type. You see "✓ Saved automatically".
+  - They're printed in the top-left corner of every invoice. Empty fields are left out.
+  - They aren't stored in each invoice. If you change them, older invoices also show the new details when you print them again.
 - **Show euros as:** `1.250,00 EUR` or `1.250,00 €`. It starts as EUR.
 - Changing it updates every amount on the page straight away, including saved invoices in the list.
 - The app remembers your choice.
@@ -155,7 +160,6 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
-- The printout doesn't show your own business details yet. The top left of the page is empty.
 - The invoice in the form can't be printed until it's saved. Print is only in the list.
 - Clients can only be added by saving an invoice. There's no "add client" button in the Clients section.
 - An invoice you haven't saved is lost if you reload or close the page.
