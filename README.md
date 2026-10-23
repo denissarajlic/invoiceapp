@@ -16,7 +16,7 @@ I built it while learning git, one feature branch at a time.
 - **Paid / unpaid / overdue:** see what's still owed and what's late.
 - **Summary:** totals for this month and this year, plus unpaid and overdue.
 - **Clients:** saved automatically, with address and ID number (JIB).
-- **Print / PDF:** a clean A4 invoice with your business details.
+- **Print / PDF:** a clean A4 invoice with your logo and business details.
 - **Export:** a CSV file for Excel with Bosnian settings.
 - **English and Bosnian:** switch with the 🌐 button.
 - **Backup / import:** save everything to one file, and load it on another device.

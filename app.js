@@ -775,19 +775,92 @@ function setUpSettings() {
   // Your business details are saved as you type.
   const business = loadBusiness();
   const savedNote = document.getElementById("business-saved");
+  function saveBusiness() {
+    try {
+      localStorage.setItem(BUSINESS_KEY, JSON.stringify(business));
+      savedNote.textContent = t("savedAutomatically");
+      return true;
+    } catch {
+      savedNote.textContent = t("saveFailed");
+      return false;
+    }
+  }
   for (const field of BUSINESS_FIELDS) {
     const input = document.getElementById(`business-${field}`);
     input.value = business[field] || "";
     input.addEventListener("input", () => {
       business[field] = input.value;
-      try {
-        localStorage.setItem(BUSINESS_KEY, JSON.stringify(business));
-        savedNote.textContent = t("savedAutomatically");
-      } catch {
-        savedNote.textContent = t("saveFailed");
-      }
+      saveBusiness();
     });
   }
+
+  // The logo, stored with the other business details as a small picture.
+  const preview = document.getElementById("logo-preview");
+  const removeLogo = document.getElementById("remove-logo");
+  const logoFile = document.getElementById("logo-file");
+  const logoError = document.getElementById("logo-error");
+  function showLogo() {
+    preview.hidden = !business.logo;
+    removeLogo.hidden = !business.logo;
+    if (business.logo) preview.src = business.logo;
+    else preview.removeAttribute("src");
+  }
+  showLogo();
+
+  document.getElementById("choose-logo").addEventListener("click", () => logoFile.click());
+  logoFile.addEventListener("change", async () => {
+    const file = logoFile.files[0];
+    // Choosing the same file again later should still work.
+    logoFile.value = "";
+    if (!file) return;
+    logoError.hidden = true;
+    try {
+      const before = business.logo;
+      business.logo = await shrinkPicture(file);
+      if (!saveBusiness()) {
+        // Too big for the browser's storage: keep the old logo.
+        business.logo = before;
+        throw new Error("not saved");
+      }
+      showLogo();
+    } catch {
+      logoError.textContent = t("logoFailed");
+      logoError.hidden = false;
+    }
+  });
+  removeLogo.addEventListener("click", () => {
+    delete business.logo;
+    saveBusiness();
+    showLogo();
+  });
+}
+
+// Make a picture at most 400 × 200 pixels, keeping its shape and any
+// see-through parts, so a big photo doesn't fill up the browser's storage.
+// Returns it as text ("data:image/png;base64,…") that can be saved.
+function shrinkPicture(file) {
+  const MAX_WIDTH = 400;
+  const MAX_HEIGHT = 200;
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const picture = new Image();
+    picture.onload = () => {
+      URL.revokeObjectURL(url);
+      const width = picture.naturalWidth || MAX_WIDTH;
+      const height = picture.naturalHeight || MAX_HEIGHT;
+      const scale = Math.min(1, MAX_WIDTH / width, MAX_HEIGHT / height);
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(width * scale));
+      canvas.height = Math.max(1, Math.round(height * scale));
+      canvas.getContext("2d").drawImage(picture, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL("image/png"));
+    };
+    picture.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("not a picture"));
+    };
+    picture.src = url;
+  });
 }
 
 // Your own name, address, JIB and bank account, printed on every invoice.

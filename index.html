@@ -197,6 +197,16 @@
 
       <h2 data-i18n="yourBusiness">Your business</h2>
       <p class="hint" data-i18n="yourBusinessHint"></p>
+      <div class="logo-field">
+        <span class="logo-label" data-i18n="logo">Logo</span>
+        <div class="logo-row">
+          <img id="logo-preview" class="logo-preview" alt="" hidden>
+          <button id="choose-logo" type="button" class="tool-button" data-i18n="chooseLogo">Choose logo…</button>
+          <button id="remove-logo" type="button" class="link danger" data-i18n="removeLogo" hidden>Remove</button>
+          <input id="logo-file" type="file" accept="image/*" hidden>
+        </div>
+        <p id="logo-error" class="error" hidden></p>
+      </div>
       <label>
         <span data-i18n="businessName">Business name</span>
         <input id="business-name" type="text" autocomplete="organization">

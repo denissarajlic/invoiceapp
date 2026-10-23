@@ -19,6 +19,12 @@ function formatQuantity(quantity) {
 function printSeller() {
   const seller = el("div", "print-seller");
   const business = loadBusiness();
+  if (business.logo) {
+    const logo = el("img", "print-logo");
+    logo.src = business.logo;
+    logo.alt = "";
+    seller.append(logo);
+  }
   if (business.name) seller.append(el("div", "print-seller-name", business.name));
   if (business.address) seller.append(el("div", "", business.address));
   if (business.jib) seller.append(el("div", "", `JIB ${business.jib}`));
@@ -91,7 +97,7 @@ function printTotals(saved) {
   return totals;
 }
 
-function printInvoice(saved) {
+async function printInvoice(saved) {
   const area = document.getElementById("print-area");
   const top = el("header", "print-top");
   top.append(printSeller(), printHeading(saved));
@@ -99,5 +105,7 @@ function printInvoice(saved) {
   if (saved.note) {
     area.append(el("p", "print-note", saved.note));
   }
+  // Wait until the logo is ready, so it isn't missing on paper.
+  await Promise.all([...area.querySelectorAll("img")].map((img) => img.decode().catch(() => {})));
   window.print();
 }
