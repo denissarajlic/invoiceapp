@@ -1,3 +1,7 @@
 # Files git should ignore: exported and printed test files, not app code.
 *.csv
 *.pdf
+
+# Backup files hold your real invoices and clients. The repository is public,
+# so they must never be committed.
+invoiceapp-backup-*.json

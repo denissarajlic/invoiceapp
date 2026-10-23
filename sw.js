@@ -11,6 +11,8 @@ const FILES = [
   "clients.js",
   "print.js",
   "export.js",
+  "backup.js",
+  "install.js",
   "app.js",
   "manifest.webmanifest",
   "icons/icon.svg",

@@ -191,9 +191,22 @@ Last updated: 23 Oct 2026
 - Changing it updates every amount on the page straight away, including saved invoices in the list.
 - The app remembers your choice.
 
+## Backup and import
+- **💾 Backup** (Rezervna kopija) is near the bottom of the page, between Clients and Settings.
+- **Download backup** saves one file, e.g. `invoiceapp-backup-2026-10-23.json`, with everything the app has saved: invoices, invoice numbering, clients, your business details and the EUR/€ setting.
+- **Import backup…** opens a backup file. The app shows the backup's date and number of invoices, and asks first. Only **OK** imports it.
+- Importing **replaces everything** on this device with what's in the file. Invoices on the device that aren't in the backup are gone afterwards. The app then reloads and shows the imported invoices.
+- A file that isn't a backup from this app is refused, and nothing is changed.
+- The Backup title shows **Last backup: 23.10.2026.** (Zadnja kopija), or "No backup yet". It turns **orange** if there has never been a backup or the last one is more than 30 days old, but only when there are invoices.
+- To move invoices to another device: Download backup on the old one, send the file to the new one (e.g. by email or cloud), then Import backup there.
+- Backup files saved inside the app's folder are ignored by git, so your real invoices never end up on the public GitHub page.
+
 ## Using it like an app
 - The app is online at https://denissarajlic.github.io/invoiceapp/
-- **iPhone:** open the link in Safari, tap Share, then **Add to Home Screen**. **Android:** in Chrome, tap **Install app**. **Windows:** in Chrome or Edge, click the install icon in the address bar.
+- **📱 Install as an app** (Instaliraj kao aplikaciju), near the bottom of the page, has the steps for iPhone, Android and computers.
+- **Android** (Chrome) and **Windows/Mac** (Chrome, Edge): when installing is possible, an **⬇ Install app** button appears in the top bar and in that section. Pressing it opens the browser's install question.
+- **iPhone:** there's no button, because Safari doesn't allow one. Open the link in Safari, tap Share, then **Add to Home Screen**.
+- Opened as an installed app, the Install section and button are hidden.
 - Installed, it gets its own icon (a white invoice on blue) and the name "Invoices", and it opens full screen without the browser's address bar.
 - It keeps a copy of itself on the device. After you've opened it once with internet, it also opens and works without internet.
 - With internet, it always loads the newest version. A device gets a change only after it has been pushed to GitHub (`git push`). If an update doesn't show, close the app fully and open it again.
