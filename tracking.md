@@ -38,7 +38,7 @@ Last updated: 23 Oct 2026
 - It opens the invoice in the form. The title says **Edit invoice** (Uredi fakturu), and the page scrolls up to it.
 - Above the form it says **Editing 2026-003** (Uređuješ fakturu 2026-003), with a **Cancel** button. The invoice is also highlighted in blue in the list.
 - You can change everything: client, date, due date, currency and lines.
-- The invoice **keeps its number**, even if you change the date to another year.
+- The invoice **keeps its number**, even if you change the date to another year, unless you type a different number at the top (see Invoice number).
 - The due date stays as it was saved, even if you change the invoice date. You can still change the due date yourself.
 - **Save** replaces the old version: "Invoice 2026-003 updated." The form then starts a new, empty invoice.
 - **Cancel** throws the changes away. The saved invoice stays as it was.
@@ -157,10 +157,18 @@ Last updated: 23 Oct 2026
 ## Invoice number
 - Every saved invoice gets a number: the year, then a counter. For example `2026-001`, `2026-002`, …
 - The top right of the form shows the number the invoice will get, e.g. **No. 2026-004** (Br. 2026-004).
+- **You can change it:** click the number (it has a dashed underline) and type another one, e.g. `2026-046`. This works for new invoices and when editing.
+  - It must look like `2026-046`: the year, a dash, and at least 3 digits. Otherwise it turns red, with a message under it.
+  - No two invoices can have the same number. A number that's already used turns red: "Invoice 2026-003 already exists."
+  - Save refuses while the number is wrong: "Not saved. Fix the invoice number first."
+  - Numbering continues after the highest number used: after you save `2026-046`, the next new invoice gets `2026-047`. Typing a lower number doesn't move the counter back.
+  - Once you've typed a number, it stays as you typed it, even if you change the date.
+  - Emptying the field gives back the automatic number.
+  - If you change an existing invoice's number, its old number isn't given out again automatically.
 - The year comes from the invoice date. Each year starts again at `001`. If you change the date to another year, the number shown changes too, e.g. to `2025-…`.
 - The number is only used up when you press **Save**. An invoice you never save doesn't use a number.
 - After saving, the message shows the number: "Invoice 2026-004 saved."
-- The app remembers the last number it gave out in each year, so a number is never given out twice.
+- The app remembers the last number it gave out in each year, so it never gives out a number twice by itself.
 - Invoices saved before numbering existed got numbers automatically, in the order they were saved.
 
 ## Due date

@@ -42,10 +42,54 @@ h1 {
   gap: 12px;
 }
 
-.invoice-number {
+/* "No. 2026-001" at the top right: looks like text, but you can type in it. */
+label.invoice-number {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #59636e;
+}
+
+.invoice-number input {
+  width: 6.5em;
+  padding: 2px 4px;
   font-weight: 600;
   color: #59636e;
   font-variant-numeric: tabular-nums;
+  text-align: right;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed #8c959f;
+  border-radius: 0;
+}
+
+.invoice-number input:hover {
+  border-bottom-color: #0969da;
+}
+
+.invoice-number input:focus {
+  color: #1f2328;
+  background: #fff;
+  outline-offset: 0;
+  border-radius: 4px;
+}
+
+.invoice-number input.invalid {
+  color: #cf222e;
+  border-bottom: 1px solid #cf222e;
+  background: #fff5f5;
+}
+
+.number-error {
+  margin: -8px 0 12px;
+  text-align: right;
+}
+
+.number-error[hidden] {
+  display: none;
 }
 
 h2 {
