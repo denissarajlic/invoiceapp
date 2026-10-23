@@ -61,6 +61,18 @@ Last updated: 23 Oct 2026
 - Above the list: **Unpaid: 1.250,00 KM + 300,00 €**, the total with VAT of all unpaid invoices.
 - KM and EUR are added up separately, never mixed. A currency with nothing unpaid isn't shown. With nothing unpaid at all, it shows `0,00 KM`.
 
+## Clients
+- Under the client name there are two more fields: **Address** (Adresa) and **ID number (JIB)** (ID broj).
+- When you type in the client name, the browser suggests your saved clients. Picking one, or typing a saved name exactly, fills in their address and JIB. Capitals don't matter.
+- Saving an invoice with a **new** client name adds that client to the client list, with the address and JIB from the invoice.
+- Saving an invoice for a client who's **already** on the list doesn't change the list, even if you typed a different address on the invoice.
+- The clients of invoices saved before the client list existed were added to it automatically.
+- **👥 Clients (3)** (Klijenti) near the bottom of the page lists all clients A–Z, with their address and JIB. Tap it to open or close it.
+- **Edit** opens a client's name, address and JIB to change. **Save** keeps the changes and **Cancel** throws them away. The name can't be empty, and two clients can't have the same name.
+- **Delete** removes a client after asking first.
+- **Invoices keep their own copy** of the client's name, address and JIB. Changing or deleting a client never changes invoices that were already made.
+- Edit and Duplicate also bring back the invoice's address and JIB.
+
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
 - This is the same in English and in Bosnian.
@@ -126,5 +138,6 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
+- Clients can only be added by saving an invoice. There's no "add client" button in the Clients section.
 - An invoice you haven't saved is lost if you reload or close the page.
 - A line with a problem is still counted in the totals on screen until you fix it.

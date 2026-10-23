@@ -423,18 +423,75 @@ button.link.danger:hover {
   padding: 6px 12px;
 }
 
-/* Settings, folded away at the bottom of the page. */
-.settings {
+/* Clients and Settings, folded away at the bottom of the page. */
+.clients {
   margin-top: 32px;
 }
 
+.settings {
+  margin-top: 16px;
+}
+
+.clients summary,
 .settings summary {
   cursor: pointer;
   font-weight: 600;
 }
 
+.clients[open] summary,
 .settings[open] summary {
   margin-bottom: 16px;
+}
+
+.client-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.client-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #eaeef2;
+}
+
+.client-row:first-child {
+  border-top: none;
+}
+
+.client-name {
+  font-weight: 600;
+}
+
+.client-details {
+  color: #59636e;
+  font-size: 0.9rem;
+}
+
+.client-row .row-actions {
+  margin-top: 0;
+  flex-wrap: nowrap;
+}
+
+/* A client being changed: its fields one under the other. */
+.client-row.client-edit {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.client-edit label {
+  margin-bottom: 0;
+}
+
+button.small-primary {
+  background: #0969da;
+  color: #fff;
+  font-weight: 600;
+  padding: 6px 14px;
 }
 
 .settings label {

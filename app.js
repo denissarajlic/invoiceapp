@@ -17,6 +17,8 @@ function blankInvoice() {
   const date = todayText();
   return {
     client: "",
+    clientAddress: "",
+    clientJib: "",
     date,
     dueDate: addDays(date, DAYS_TO_PAY),
     // Becomes true once you pick a due date yourself. Until then the due date
@@ -398,6 +400,8 @@ function duplicateInvoice(saved) {
   if (formHasContent() && !confirm(t("confirmReplace"))) return;
   const copy = blankInvoice();
   copy.client = saved.client;
+  copy.clientAddress = saved.clientAddress || "";
+  copy.clientJib = saved.clientJib || "";
   copy.currency = saved.currency;
   copy.lines = saved.lines.map((line) => ({
     description: line.description,
@@ -414,6 +418,8 @@ function editInvoice(saved) {
   const opened = blankInvoice();
   opened.editing = saved.number;
   opened.client = saved.client;
+  opened.clientAddress = saved.clientAddress || "";
+  opened.clientJib = saved.clientJib || "";
   opened.date = saved.date;
   opened.dueDate = dueDateOf(saved);
   // The saved due date stays, even if you change the date.
@@ -473,6 +479,9 @@ function saveInvoice() {
   const lastNumbers = loadLastNumbers();
   const toSave = {
     client: invoice.client.trim(),
+    // The invoice keeps its own copy of the client's details.
+    clientAddress: invoice.clientAddress.trim(),
+    clientJib: invoice.clientJib.trim(),
     date: invoice.date,
     dueDate: invoice.dueDate,
     currency: invoice.currency,
@@ -514,18 +523,24 @@ function saveInvoice() {
     return;
   }
 
+  // A client name that's not on the client list yet is added to it.
+  addClientIfNew({ name: toSave.client, address: toSave.clientAddress, jib: toSave.clientJib });
+
   // Start a fresh invoice.
   invoice = blankInvoice();
   fillForm();
   renderLines();
   showFormNote();
   renderInvoiceList();
+  renderClients();
   showMessage(messageKey, false, { number });
 }
 
 // Put the current invoice's client, date and currency into the form.
 function fillForm() {
   document.getElementById("client").value = invoice.client;
+  document.getElementById("client-address").value = invoice.clientAddress;
+  document.getElementById("client-jib").value = invoice.clientJib;
   document.getElementById("date").value = invoice.date;
   document.getElementById("due-date").value = invoice.dueDate;
   document.getElementById("currency").value = invoice.currency;
@@ -552,7 +567,19 @@ function setUpForm() {
     event.preventDefault();
   });
 
-  client.addEventListener("input", () => { invoice.client = client.value; });
+  const clientAddress = document.getElementById("client-address");
+  const clientJib = document.getElementById("client-jib");
+  client.addEventListener("input", () => {
+    invoice.client = client.value;
+    // Picked (or typed) a saved client? Fill in their address and JIB.
+    const saved = findClient(client.value);
+    if (saved) {
+      invoice.clientAddress = clientAddress.value = saved.address;
+      invoice.clientJib = clientJib.value = saved.jib;
+    }
+  });
+  clientAddress.addEventListener("input", () => { invoice.clientAddress = clientAddress.value; });
+  clientJib.addEventListener("input", () => { invoice.clientJib = clientJib.value; });
   date.addEventListener("input", () => {
     invoice.date = date.value;
     if (!invoice.dueDateChanged) {
@@ -603,14 +630,17 @@ document.getElementById("language").addEventListener("click", () => {
   translatePage();
   showProblems();
   renderInvoiceList();
+  renderClients();
   showNextNumber();
   showFormNote();
   document.getElementById("save-message").hidden = true;
 });
 
 numberOldInvoices();
+addClientsFromInvoices();
 setUpForm();
 setUpSettings();
 renderLines();
 renderInvoiceList();
+renderClients();
 showFormNote();

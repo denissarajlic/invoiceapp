@@ -26,8 +26,20 @@
     <form id="invoice-form" class="card">
       <label>
         <span data-i18n="client">Client</span>
-        <input id="client" type="text" data-i18n-placeholder="clientPlaceholder" placeholder="Client name" autocomplete="off">
+        <input id="client" type="text" list="client-options" data-i18n-placeholder="clientPlaceholder" placeholder="Client name" autocomplete="off">
+        <datalist id="client-options"></datalist>
       </label>
+
+      <div class="row">
+        <label>
+          <span data-i18n="address">Address</span>
+          <input id="client-address" type="text" autocomplete="off">
+        </label>
+        <label>
+          <span data-i18n="jib">ID number (JIB)</span>
+          <input id="client-jib" type="text" inputmode="numeric" autocomplete="off">
+        </label>
+      </div>
 
       <div class="row">
         <label>
@@ -85,6 +97,12 @@
       <p id="no-invoices" class="empty" data-i18n="noInvoices" hidden></p>
     </section>
 
+    <details class="clients card">
+      <summary id="clients-title">Clients</summary>
+      <ul id="client-list" class="client-list"></ul>
+      <p id="no-clients" class="empty" data-i18n="noClients" hidden></p>
+    </details>
+
     <details class="settings card">
       <summary data-i18n="settings">Settings</summary>
       <label>
@@ -137,7 +155,43 @@
     </div>
   </template>
 
+  <template id="client-row-template">
+    <li class="client-row">
+      <div>
+        <div class="client-name"></div>
+        <div class="client-details"></div>
+      </div>
+      <span class="row-actions">
+        <button type="button" class="edit link"></button>
+        <button type="button" class="delete link danger"></button>
+      </span>
+    </li>
+  </template>
+
+  <template id="client-edit-template">
+    <li class="client-row client-edit">
+      <label>
+        <span data-i18n="client">Client</span>
+        <input class="client-name-input" type="text" autocomplete="off">
+      </label>
+      <label>
+        <span data-i18n="address">Address</span>
+        <input class="client-address-input" type="text" autocomplete="off">
+      </label>
+      <label>
+        <span data-i18n="jib">ID number (JIB)</span>
+        <input class="client-jib-input" type="text" inputmode="numeric" autocomplete="off">
+      </label>
+      <p class="error" hidden></p>
+      <span class="row-actions">
+        <button type="button" class="cancel-client link" data-i18n="cancel">Cancel</button>
+        <button type="button" class="save-client small-primary" data-i18n="save">Save</button>
+      </span>
+    </li>
+  </template>
+
   <script src="i18n.js"></script>
+  <script src="clients.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -73,7 +73,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Shows the total of all unpaid invoices.
   - KM and EUR are always added up separately: `1.250,00 KM + 300,00 €`. This applies to all totals in the app.
 
-- [ ] **13. Client list**
+- [x] **13. Client list**
   - Pick a saved client when creating an invoice, or type a new one.
   - Saved per client: name, address, ID number (JIB).
   - A client is added to the list automatically when you save an invoice with a new client.
