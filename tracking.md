@@ -45,6 +45,13 @@ Last updated: 23 Oct 2026
 - The same line checks apply: a line with a problem can't be saved.
 - If you've already typed something into the form, the app asks first whether to throw it away.
 
+## Delete an invoice
+- Each invoice in the list has a red **Delete** button (Obriši).
+- The app asks first: "Delete invoice 2026-003? This can't be undone." Only **OK** deletes it.
+- The invoice disappears from the list straight away.
+- A deleted number is **never given out again**. If you delete `2026-003`, the next new invoice still gets `2026-004` (or the next free number), so there's a gap.
+- If you delete the invoice that's open for editing, the form goes back to a new, empty invoice.
+
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
 - This is the same in English and in Bosnian.
@@ -94,7 +101,8 @@ Last updated: 23 Oct 2026
 - An invoice without a client name shows "(no client)" (bez klijenta) in grey.
 - A newly saved invoice appears at the top of the list straight away.
 - With no saved invoices, it says "No saved invoices yet."
-- On a phone, each invoice takes three rows: number and total on top, then the client on the left with the date and due date on the right. On a wide screen, each invoice is one row.
+- On a phone, each invoice shows the number and total on top, then the client on the left with the date and due date on the right. On a wide screen, all of that fits on one row.
+- Under each invoice are its buttons: **Edit**, **Duplicate** and **Delete**.
 
 ## Settings
 - **⚙ Settings** (Postavke) is at the bottom of the page. Tap it to open or close it.
@@ -109,6 +117,5 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
-- Saved invoices can't be deleted yet.
 - An invoice you haven't saved is lost if you reload or close the page.
 - A line with a problem is still counted in the totals on screen until you fix it.

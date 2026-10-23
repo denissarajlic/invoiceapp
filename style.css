@@ -333,11 +333,21 @@ button.link:hover {
   background: #f4f5f7;
 }
 
+button.link.danger {
+  color: #cf222e;
+}
+
+button.link.danger:hover {
+  background: #fff5f5;
+}
+
 /* On a computer: one row per invoice, like a table. */
 @media (min-width: 760px) {
   .invoice-row {
-    grid-template-columns: 5.5rem 1fr 6.5rem 8rem 8.5rem auto;
-    grid-template-areas: "number client date due total actions";
+    grid-template-columns: 5.5rem 1fr 6.5rem 8rem 8.5rem;
+    grid-template-areas:
+      "number  client  date    due     total"
+      "actions actions actions actions actions";
     align-items: baseline;
   }
 }

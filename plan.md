@@ -63,7 +63,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - The invoice number can't be changed.
   - The same checks as in Feature 3 apply.
 
-- [ ] **11. Delete an invoice**
+- [x] **11. Delete an invoice**
   - The app asks first: "Delete invoice 2026-003?" → Yes / No.
   - A deleted number is never given out again, so there's a gap.
 

@@ -303,8 +303,30 @@ function renderInvoiceList() {
     const duplicate = row.querySelector(".duplicate");
     duplicate.textContent = t("duplicate");
     duplicate.addEventListener("click", () => duplicateInvoice(saved));
+    const remove = row.querySelector(".delete");
+    remove.textContent = t("delete");
+    remove.addEventListener("click", () => deleteInvoice(saved.number));
     list.append(row);
   }
+}
+
+// Delete a saved invoice after asking. Its number is never given out again,
+// because the last number used each year is remembered separately.
+function deleteInvoice(number) {
+  if (!confirm(t("confirmDelete", { number }))) return;
+  const invoices = loadInvoices().filter((saved) => saved.number !== number);
+  try {
+    localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices));
+  } catch {
+    alert(t("deleteFailed"));
+    return;
+  }
+  // The invoice open in the form is gone, so start a new one.
+  if (invoice.editing === number) {
+    openInForm(blankInvoice());
+  }
+  renderInvoiceList();
+  showNextNumber();
 }
 
 // Has anything been typed into the form yet?
