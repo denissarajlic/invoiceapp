@@ -294,7 +294,50 @@ function renderInvoiceList() {
     const due = dueDateOf(saved);
     row.querySelector(".row-due").textContent = due ? t("dueOn", { date: formatDate(due) }) : "";
     row.querySelector(".row-total").textContent = formatMoney(totalsOf(saved.lines).total, saved.currency);
+    const duplicate = row.querySelector(".duplicate");
+    duplicate.textContent = t("duplicate");
+    duplicate.addEventListener("click", () => duplicateInvoice(saved));
     list.append(row);
+  }
+}
+
+// Has anything been typed into the form yet?
+function formHasContent() {
+  return invoice.client.trim() !== "" ||
+    invoice.lines.some((line) => line.description.trim() !== "" || line.price !== "");
+}
+
+// Put another invoice into the form, e.g. a copy, and scroll up to it.
+function openInForm(newInvoice) {
+  invoice = newInvoice;
+  fillForm();
+  renderLines();
+  showCopyNote();
+  document.getElementById("save-message").hidden = true;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// A copy with today's date and the next number. It is only saved when you press Save.
+function duplicateInvoice(saved) {
+  if (formHasContent() && !confirm(t("confirmReplace"))) return;
+  const copy = blankInvoice();
+  copy.client = saved.client;
+  copy.currency = saved.currency;
+  copy.lines = saved.lines.map((line) => ({
+    description: line.description,
+    quantity: String(line.quantity),
+    price: String(line.price),
+  }));
+  copy.copyOf = saved.number;
+  openInForm(copy);
+}
+
+// "Copy of 2026-001" above the form, with a Cancel button.
+function showCopyNote() {
+  const note = document.getElementById("copy-note");
+  note.hidden = !invoice.copyOf;
+  if (invoice.copyOf) {
+    document.getElementById("copy-of").textContent = t("copyOf", { number: invoice.copyOf });
   }
 }
 
@@ -353,6 +396,7 @@ function saveInvoice() {
   invoice = blankInvoice();
   fillForm();
   renderLines();
+  showCopyNote();
   renderInvoiceList();
   showMessage("saved", false, { number });
 }
@@ -375,6 +419,10 @@ function setUpForm() {
   fillForm();
 
   document.getElementById("save").addEventListener("click", saveInvoice);
+  // Throw the copy away and start a new, empty invoice. No number is used up.
+  document.getElementById("cancel-copy").addEventListener("click", () => {
+    openInForm(blankInvoice());
+  });
   // Pressing Enter in a field must not save a half-finished invoice.
   document.getElementById("invoice-form").addEventListener("submit", (event) => {
     event.preventDefault();
@@ -430,6 +478,7 @@ document.getElementById("language").addEventListener("click", () => {
   showProblems();
   renderInvoiceList();
   showNextNumber();
+  showCopyNote();
   document.getElementById("save-message").hidden = true;
 });
 

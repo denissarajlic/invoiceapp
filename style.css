@@ -250,14 +250,15 @@ input.invalid {
   display: none;
 }
 
-/* On a phone: number and total on top, client and dates below. */
+/* On a phone: number and total on top, client and dates below, buttons last. */
 .invoice-row {
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-areas:
     "number total"
     "client date"
-    "client due";
+    "client due"
+    "actions actions";
   gap: 2px 12px;
   padding: 12px 16px;
   border-top: 1px solid #eaeef2;
@@ -306,13 +307,59 @@ input.invalid {
   font-variant-numeric: tabular-nums;
 }
 
+.row-actions {
+  grid-area: actions;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+/* A button that looks like a small link. */
+button.link {
+  background: transparent;
+  color: #0969da;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 8px;
+}
+
+button.link:hover {
+  background: #f4f5f7;
+}
+
 /* On a computer: one row per invoice, like a table. */
 @media (min-width: 760px) {
   .invoice-row {
-    grid-template-columns: 6rem 1fr 7rem 8.5rem 9rem;
-    grid-template-areas: "number client date due total";
+    grid-template-columns: 5.5rem 1fr 6.5rem 8rem 8.5rem auto;
+    grid-template-areas: "number client date due total actions";
     align-items: baseline;
   }
+}
+
+/* "Copy of 2026-001" with Cancel, above the form. */
+.copy-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 8px 8px 8px 14px;
+  background: #ddf4ff;
+  border: 1px solid #54aeff;
+  border-radius: 8px;
+  color: #0a3069;
+  font-weight: 500;
+}
+
+.copy-note[hidden] {
+  display: none;
+}
+
+.copy-note button {
+  background: #fff;
+  color: #1f2328;
+  border: 1px solid #d0d7de;
+  padding: 6px 12px;
 }
 
 /* Settings, folded away at the bottom of the page. */

@@ -53,7 +53,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - For euros, Settings lets you choose `EUR` or `€`.
   - Prices are typed with a dot: `12.50`.
 
-- [ ] **9. Duplicate an invoice**
+- [x] **9. Duplicate an invoice**
   - Makes a copy with the next number, today's date and a new due date (today + 15). Same client, currency and lines.
   - The copy opens in the form first and is only saved when you press **Save**.
   - If you cancel, the number is not used up.

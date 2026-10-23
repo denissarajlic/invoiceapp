@@ -25,6 +25,14 @@ Last updated: 23 Oct 2026
 - Everything updates straight away as you type, and when you add or remove a line.
 - An empty quantity or price counts as 0.
 
+## Duplicate an invoice
+- Each invoice in the list has a **Duplicate** button (Dupliraj).
+- It opens a copy in the form with the same client, currency and lines, **today's date**, a due date 15 days from today, and the next number. The page scrolls up to the form.
+- Above the form it says **Copy of 2026-001** (Kopija fakture 2026-001), with a **Cancel** button.
+- The copy is only saved when you press **Save**, and you can change anything first.
+- **Cancel** throws the copy away and starts a new, empty invoice. No number is used up.
+- If you've already typed something into the form, the app asks first whether to throw it away and open the copy.
+
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
 - This is the same in English and in Bosnian.
@@ -89,6 +97,6 @@ Last updated: 23 Oct 2026
 - What you type yourself (client name and descriptions) is never translated.
 
 ## Known problems
-- Saved invoices can't be opened, changed or deleted yet. Tapping one in the list does nothing.
+- Saved invoices can't be changed or deleted yet. Only Duplicate works in the list.
 - An invoice you haven't saved is lost if you reload or close the page.
 - A line with a problem is still counted in the totals on screen until you fix it.

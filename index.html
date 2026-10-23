@@ -18,6 +18,11 @@
       <span id="invoice-number" class="invoice-number"></span>
     </div>
 
+    <p id="copy-note" class="copy-note" hidden>
+      <span id="copy-of"></span>
+      <button id="cancel-copy" type="button" data-i18n="cancel">Cancel</button>
+    </p>
+
     <form id="invoice-form" class="card">
       <label>
         <span data-i18n="client">Client</span>
@@ -94,6 +99,9 @@
       <span class="row-date"></span>
       <span class="row-due"></span>
       <span class="row-total"></span>
+      <span class="row-actions">
+        <button type="button" class="duplicate link"></button>
+      </span>
     </li>
   </template>
 
