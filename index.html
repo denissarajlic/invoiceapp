@@ -39,6 +39,21 @@
       <div id="lines"></div>
       <p id="no-lines" class="empty" data-i18n="noLines" hidden></p>
       <button id="add-line" type="button" class="secondary" data-i18n="addLine">+ Add line</button>
+
+      <dl class="totals">
+        <div>
+          <dt data-i18n="withoutVat">Amount without VAT</dt>
+          <dd id="subtotal"></dd>
+        </div>
+        <div>
+          <dt data-i18n="vat">VAT 17%</dt>
+          <dd id="vat"></dd>
+        </div>
+        <div class="grand-total">
+          <dt data-i18n="total">Total</dt>
+          <dd id="total"></dd>
+        </div>
+      </dl>
     </form>
   </main>
 
@@ -56,6 +71,10 @@
         <span data-i18n="price">Price</span>
         <input class="price" type="number" step="any" inputmode="decimal">
       </label>
+      <div class="line-amount">
+        <span data-i18n="amount">Amount</span>
+        <output class="amount"></output>
+      </div>
       <button type="button" class="remove" data-i18n-title="removeLine" data-i18n-label="removeLine">✕</button>
     </div>
   </template>

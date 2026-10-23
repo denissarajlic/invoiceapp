@@ -1,4 +1,5 @@
 // The invoice being filled in. Nothing is saved yet (that's Feature 4).
+// Prices are typed without VAT; the app adds 17% on top.
 const invoice = {
   client: "",
   date: todayText(),
@@ -21,6 +22,42 @@ function todayText() {
   return `${now.getFullYear()}-${month}-${day}`;
 }
 
+const VAT_RATE = 0.17;
+
+// Money is counted in whole cents (feninga), so 0.1 + 0.2 is exactly 0.30.
+function toCents(amount) {
+  return Math.round(Number((amount * 100).toFixed(6)));
+}
+
+// An empty or unreadable field counts as 0.
+function numberFrom(text) {
+  const number = parseFloat(text);
+  return Number.isFinite(number) ? number : 0;
+}
+
+function lineCents(line) {
+  return toCents(numberFrom(line.quantity) * numberFrom(line.price));
+}
+
+// "292.50 KM". The Bosnian style (292,50 KM) comes in Feature 8.
+function formatMoney(cents) {
+  return `${(cents / 100).toFixed(2)} ${invoice.currency}`;
+}
+
+// Work out every line amount and the three totals, and show them.
+function updateTotals() {
+  const amounts = linesBox.querySelectorAll(".amount");
+  invoice.lines.forEach((line, index) => {
+    amounts[index].textContent = formatMoney(lineCents(line));
+  });
+
+  const subtotal = invoice.lines.reduce((sum, line) => sum + lineCents(line), 0);
+  const vat = Math.round(subtotal * VAT_RATE);
+  document.getElementById("subtotal").textContent = formatMoney(subtotal);
+  document.getElementById("vat").textContent = formatMoney(vat);
+  document.getElementById("total").textContent = formatMoney(subtotal + vat);
+}
+
 // Draw all lines again. Only called when a line is added or removed,
 // so typing in a field never loses its place.
 function renderLines() {
@@ -32,6 +69,7 @@ function renderLines() {
       input.value = line[field];
       input.addEventListener("input", () => {
         line[field] = input.value;
+        updateTotals();
       });
     }
     row.querySelector(".remove").addEventListener("click", () => {
@@ -41,6 +79,7 @@ function renderLines() {
     linesBox.append(row);
   });
   document.getElementById("no-lines").hidden = invoice.lines.length > 0;
+  updateTotals();
   translatePage();
 }
 
@@ -55,7 +94,10 @@ function setUpForm() {
 
   client.addEventListener("input", () => { invoice.client = client.value; });
   date.addEventListener("input", () => { invoice.date = date.value; });
-  currency.addEventListener("change", () => { invoice.currency = currency.value; });
+  currency.addEventListener("change", () => {
+    invoice.currency = currency.value;
+    updateTotals();
+  });
 
   document.getElementById("add-line").addEventListener("click", () => {
     invoice.lines.push(newLine());

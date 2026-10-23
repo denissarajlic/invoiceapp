@@ -103,11 +103,16 @@ button.language {
   font-weight: 500;
 }
 
-/* One invoice line: description on top, then quantity, price and ✕. */
+/* One invoice line on a phone:
+   description on top, then quantity, price and ✕, then the amount. */
 .line {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
-  gap: 0 12px;
+  grid-template-areas:
+    "description description description"
+    "quantity    price       remove"
+    "amount      amount      amount";
+  gap: 8px 12px;
   align-items: end;
   padding: 12px 0;
   border-top: 1px solid #eaeef2;
@@ -117,9 +122,57 @@ button.language {
   margin-bottom: 0;
 }
 
-.line-description {
-  grid-column: 1 / -1;
-  margin-bottom: 8px !important;
+.line-description { grid-area: description; }
+.line label:has(.quantity) { grid-area: quantity; }
+.line label:has(.price) { grid-area: price; }
+.line .remove { grid-area: remove; }
+
+.line-amount {
+  grid-area: amount;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #59636e;
+}
+
+.amount {
+  font-weight: 600;
+  color: #1f2328;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Amount without VAT, VAT and total, at the bottom of the invoice. */
+.totals {
+  margin: 20px 0 0;
+  padding-top: 12px;
+  border-top: 2px solid #d0d7de;
+}
+
+.totals div {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.totals dt {
+  color: #59636e;
+}
+
+.totals dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.totals .grand-total {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid #eaeef2;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.totals .grand-total dt {
+  color: #1f2328;
 }
 
 button.remove {
@@ -142,11 +195,15 @@ button.remove {
 /* On a computer the whole line fits on one row. */
 @media (min-width: 640px) {
   .line {
-    grid-template-columns: 3fr 1fr 1fr auto;
+    grid-template-columns: 3fr 1fr 1fr 1.3fr auto;
+    grid-template-areas: "description quantity price amount remove";
   }
 
-  .line-description {
-    grid-column: auto;
-    margin-bottom: 0 !important;
+  .line-amount {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    /* Line the number up with the text in the input fields next to it. */
+    padding-bottom: 11px;
   }
 }

@@ -14,7 +14,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - The app works in **English** and **Bosnian**, switched with the 🌐 button. This is built in from the start, so every later feature comes in both languages.
   - What you type yourself (client names, descriptions) is never translated.
 
-- [ ] **2. Calculations (VAT / PDV 17%)**
+- [x] **2. Calculations (VAT / PDV 17%)**
   - Each line's amount = quantity × price.
   - Amount without VAT / Iznos bez PDV-a = all line amounts added together.
   - VAT 17% / PDV 17% = amount without VAT × 0.17, rounded to 2 decimals.

@@ -19,6 +19,10 @@ const translations = {
     removeLine: "Remove line",
     addLine: "+ Add line",
     noLines: "No lines yet. Press \"+ Add line\".",
+    amount: "Amount",
+    withoutVat: "Amount without VAT",
+    vat: "VAT 17%",
+    total: "Total",
   },
   bs: {
     languageName: "Bosanski",
@@ -36,6 +40,10 @@ const translations = {
     removeLine: "Ukloni stavku",
     addLine: "+ Dodaj stavku",
     noLines: "Još nema stavki. Pritisni \"+ Dodaj stavku\".",
+    amount: "Iznos",
+    withoutVat: "Iznos bez PDV-a",
+    vat: "PDV 17%",
+    total: "Ukupno za platiti",
   },
 };
 
