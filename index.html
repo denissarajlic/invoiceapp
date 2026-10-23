@@ -48,6 +48,10 @@
             <option value="EUR">EUR</option>
           </select>
         </label>
+        <label class="checkbox">
+          <input id="paid" type="checkbox">
+          <span data-i18n="paid">Paid</span>
+        </label>
       </div>
 
       <h2 data-i18n="lines">Lines</h2>
@@ -76,6 +80,7 @@
 
     <section class="invoices">
       <h1 id="invoices-title"></h1>
+      <p id="unpaid-total" class="unpaid-total"></p>
       <ul id="invoice-list" class="invoice-list"></ul>
       <p id="no-invoices" class="empty" data-i18n="noInvoices" hidden></p>
     </section>
@@ -100,6 +105,8 @@
       <span class="row-due"></span>
       <span class="row-total"></span>
       <span class="row-actions">
+        <span class="status"></span>
+        <button type="button" class="toggle-paid link"></button>
         <button type="button" class="edit link"></button>
         <button type="button" class="duplicate link"></button>
         <button type="button" class="delete link danger"></button>

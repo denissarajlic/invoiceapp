@@ -52,6 +52,15 @@ Last updated: 23 Oct 2026
 - A deleted number is **never given out again**. If you delete `2026-003`, the next new invoice still gets `2026-004` (or the next free number), so there's a gap.
 - If you delete the invoice that's open for editing, the form goes back to a new, empty invoice.
 
+## Paid / unpaid
+- Each invoice is **Unpaid** (Neplaćeno) or **Paid** (Plaćeno). A new invoice starts as Unpaid, and so does a duplicate.
+- The list shows a label on each invoice: grey **Unpaid** or green **Paid**.
+- **Mark as paid** / **Mark as unpaid** in the list switches it straight away.
+- In the form there's a **Paid** checkbox, next to the currency. Use it when you create or edit an invoice. It's saved when you press Save.
+- If you switch an invoice in the list while it's open in the form, the form's checkbox changes too.
+- Above the list: **Unpaid: 1.250,00 KM + 300,00 €**, the total with VAT of all unpaid invoices.
+- KM and EUR are added up separately, never mixed. A currency with nothing unpaid isn't shown. With nothing unpaid at all, it shows `0,00 KM`.
+
 ## Amount format
 - Every amount has two decimals and the currency, Bosnian style: `1.250,00 KM`. There's a dot between thousands and a comma before the decimals.
 - This is the same in English and in Bosnian.
@@ -102,7 +111,7 @@ Last updated: 23 Oct 2026
 - A newly saved invoice appears at the top of the list straight away.
 - With no saved invoices, it says "No saved invoices yet."
 - On a phone, each invoice shows the number and total on top, then the client on the left with the date and due date on the right. On a wide screen, all of that fits on one row.
-- Under each invoice are its buttons: **Edit**, **Duplicate** and **Delete**.
+- Under each invoice are its paid/unpaid label and its buttons: **Mark as paid**, **Edit**, **Duplicate** and **Delete**.
 
 ## Settings
 - **⚙ Settings** (Postavke) is at the bottom of the page. Tap it to open or close it.

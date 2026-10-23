@@ -24,6 +24,7 @@ function blankInvoice() {
     dueDateChanged: false,
     currency: "KM",
     lines: [newLine()],
+    paid: false,
   };
 }
 
@@ -282,6 +283,8 @@ function renderInvoiceList() {
   const template = document.getElementById("invoice-row-template");
 
   document.getElementById("invoices-title").textContent = t("invoicesTitle", { count: invoices.length });
+  document.getElementById("unpaid-total").textContent =
+    t("unpaidTotal", { amount: formatTotals(totalsByCurrency(invoices.filter((saved) => !saved.paid))) });
   document.getElementById("no-invoices").hidden = invoices.length > 0;
 
   list.replaceChildren();
@@ -303,11 +306,56 @@ function renderInvoiceList() {
     const duplicate = row.querySelector(".duplicate");
     duplicate.textContent = t("duplicate");
     duplicate.addEventListener("click", () => duplicateInvoice(saved));
+    const status = row.querySelector(".status");
+    status.textContent = t(saved.paid ? "paid" : "unpaid");
+    status.classList.toggle("paid", Boolean(saved.paid));
+    const togglePaid = row.querySelector(".toggle-paid");
+    togglePaid.textContent = t(saved.paid ? "markUnpaid" : "markPaid");
+    togglePaid.addEventListener("click", () => setPaid(saved.number, !saved.paid));
     const remove = row.querySelector(".delete");
     remove.textContent = t("delete");
     remove.addEventListener("click", () => deleteInvoice(saved.number));
     list.append(row);
   }
+}
+
+// Add up the totals (with VAT) of some invoices, separately per currency:
+// { KM: 125000, EUR: 30000 } in cents. KM and EUR are never added together.
+function totalsByCurrency(invoices) {
+  const sums = {};
+  for (const saved of invoices) {
+    sums[saved.currency] = (sums[saved.currency] || 0) + totalsOf(saved.lines).total;
+  }
+  return sums;
+}
+
+// { KM: 125000, EUR: 30000 } → "1.250,00 KM + 300,00 €". Nothing → "0,00 KM".
+function formatTotals(sums) {
+  const parts = ["KM", "EUR"]
+    .filter((currency) => sums[currency])
+    .map((currency) => formatMoney(sums[currency], currency));
+  return parts.length > 0 ? parts.join(" + ") : formatMoney(0, "KM");
+}
+
+// Mark a saved invoice as paid or unpaid, straight from the list.
+function setPaid(number, paid) {
+  const invoices = loadInvoices();
+  const saved = invoices.find((one) => one.number === number);
+  if (!saved) return;
+  saved.paid = paid;
+  try {
+    localStorage.setItem(INVOICES_KEY, JSON.stringify(invoices));
+  } catch {
+    alert(t("saveFailed"));
+    return;
+  }
+  // If it's open in the form, keep the form's checkbox the same,
+  // so saving the form later doesn't undo this.
+  if (invoice.editing === number) {
+    invoice.paid = paid;
+    document.getElementById("paid").checked = paid;
+  }
+  renderInvoiceList();
 }
 
 // Delete a saved invoice after asking. Its number is never given out again,
@@ -371,6 +419,7 @@ function editInvoice(saved) {
   // The saved due date stays, even if you change the date.
   opened.dueDateChanged = true;
   opened.currency = saved.currency;
+  opened.paid = Boolean(saved.paid);
   opened.lines = saved.lines.map((line) => ({
     description: line.description,
     quantity: String(line.quantity),
@@ -427,6 +476,7 @@ function saveInvoice() {
     date: invoice.date,
     dueDate: invoice.dueDate,
     currency: invoice.currency,
+    paid: invoice.paid,
     lines: invoice.lines.map((line) => ({
       description: line.description.trim(),
       quantity: numberFrom(line.quantity),
@@ -479,6 +529,7 @@ function fillForm() {
   document.getElementById("date").value = invoice.date;
   document.getElementById("due-date").value = invoice.dueDate;
   document.getElementById("currency").value = invoice.currency;
+  document.getElementById("paid").checked = invoice.paid;
   showNextNumber();
 }
 
@@ -519,6 +570,8 @@ function setUpForm() {
     invoice.currency = currency.value;
     updateTotals();
   });
+  const paid = document.getElementById("paid");
+  paid.addEventListener("change", () => { invoice.paid = paid.checked; });
 
   document.getElementById("add-line").addEventListener("click", () => {
     invoice.lines.push(newLine());

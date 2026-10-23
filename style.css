@@ -316,8 +316,53 @@ input.invalid {
 .row-actions {
   grid-area: actions;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
   gap: 4px;
+  margin-top: 4px;
+}
+
+/* "Unpaid" (grey) or "Paid" (green), at the start of the buttons row. */
+.status {
+  margin-right: auto;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #eaeef2;
+  color: #59636e;
+}
+
+.status.paid {
+  background: #dafbe1;
+  color: #1a7f37;
+}
+
+/* "Unpaid: 1.250,00 KM + 300,00 €" above the list. */
+.unpaid-total {
+  margin: -8px 0 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A checkbox with its text next to it, lined up with the fields beside it. */
+label.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  align-self: end;
+  min-height: 44px;
+  font-size: 1rem;
+  color: #1f2328;
+  cursor: pointer;
+}
+
+label.checkbox input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 /* A button that looks like a small link. */

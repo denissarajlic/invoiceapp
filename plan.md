@@ -67,7 +67,7 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - The app asks first: "Delete invoice 2026-003?" → Yes / No.
   - A deleted number is never given out again, so there's a gap.
 
-- [ ] **12. Paid / unpaid**
+- [x] **12. Paid / unpaid**
   - Each invoice is Paid or Unpaid. New invoices start as Unpaid.
   - The list shows the status. No separate filter.
   - Shows the total of all unpaid invoices.
