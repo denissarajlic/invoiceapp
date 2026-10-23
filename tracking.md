@@ -98,7 +98,7 @@ Last updated: 23 Oct 2026
 ## Print / PDF
 - Each invoice in the list has a **Print** button (Štampaj). It opens the browser's print window.
 - The printout shows only the invoice, with no buttons or menus, on an A4 page:
-  - top left: your business details from Settings
+  - top left: your logo, then your business details from Settings
   - top right: **Invoice** (Faktura), with the invoice number, date and due date
   - **Bill to** (Kupac): the client's name, address and JIB, as saved on the invoice
   - a table of the lines: number, description, quantity, price and amount
@@ -183,7 +183,10 @@ Last updated: 23 Oct 2026
 
 ## Settings
 - **⚙ Settings** (Postavke) is at the bottom of the page. Tap it to open or close it.
-- **Your business** (Tvoja firma): business name, address, ID number (JIB) and bank account (žiro račun).
+- **Your business** (Tvoja firma): logo, business name, address, ID number (JIB) and bank account (žiro račun).
+  - **Choose logo…** (Izaberi logo) picks a picture: PNG, JPG, SVG or another picture type. A small preview appears, with **Remove** (Ukloni) next to it.
+  - The app shrinks the logo to at most 400 × 200 pixels, keeping its shape and any see-through parts, so even a big photo fits in the browser's storage.
+  - If a file can't be used, a red message says so, and the old logo stays.
   - They're saved automatically as you type. You see "✓ Saved automatically".
   - They're printed in the top-left corner of every invoice. Empty fields are left out.
   - They aren't stored in each invoice. If you change them, older invoices also show the new details when you print them again.
@@ -193,7 +196,7 @@ Last updated: 23 Oct 2026
 
 ## Backup and import
 - **💾 Backup** (Rezervna kopija) is near the bottom of the page, between Clients and Settings.
-- **Download backup** saves one file, e.g. `invoiceapp-backup-2026-10-23.json`, with everything the app has saved: invoices, invoice numbering, clients, your business details and the EUR/€ setting.
+- **Download backup** saves one file, e.g. `invoiceapp-backup-2026-10-23.json`, with everything the app has saved: invoices, invoice numbering, clients, your business details (including the logo) and the EUR/€ setting.
 - **Import backup…** opens a backup file. The app shows the backup's date and number of invoices, and asks first. Only **OK** imports it.
 - Importing **replaces everything** on this device with what's in the file. Invoices on the device that aren't in the backup are gone afterwards. The app then reloads and shows the imported invoices.
 - A file that isn't a backup from this app is refused, and nothing is changed.

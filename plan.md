@@ -127,6 +127,10 @@ We build one feature at a time, in this order. Each feature gets its own commit,
   - Install steps for iPhone, Android and computers in the app and the README.
   - No APK file for now: installing from Chrome gives a real app icon and updates with every `git push`.
 
+- [x] **23. Company logo**
+  - Chosen in Settings, shrunk to at most 400 × 200 pixels, printed top left on every invoice.
+  - Included in the backup.
+
 ## Maybe later
-- More business details: PDV number, phone, email, logo.
+- More business details: PDV number, phone, email.
 - A real APK file for Android (e.g. made with PWABuilder), or publishing on Google Play.

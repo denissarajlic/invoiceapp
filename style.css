@@ -928,3 +928,49 @@ button.install-top[hidden],
 #install-button[hidden] {
   display: none;
 }
+
+/* Logo in Settings: a small preview, Choose and Remove. */
+.logo-field {
+  margin-bottom: 12px;
+}
+
+.logo-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #59636e;
+  margin-bottom: 4px;
+}
+
+.logo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.logo-preview {
+  max-width: 160px;
+  max-height: 64px;
+  padding: 4px;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  /* A checkerboard behind it, so see-through logos are easy to see. */
+  background: repeating-conic-gradient(#f4f5f7 0% 25%, #fff 0% 50%) 50% / 12px 12px;
+}
+
+.logo-preview[hidden] {
+  display: none;
+}
+
+.logo-field .error {
+  margin-top: 6px;
+}
+
+@media print {
+  .print-logo {
+    display: block;
+    max-width: 60mm;
+    max-height: 22mm;
+    margin-bottom: 6px;
+  }
+}
