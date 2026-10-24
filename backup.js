@@ -13,6 +13,7 @@ function backupKeys() {
     [CLIENTS_KEY]: "json",
     [BUSINESS_KEY]: "json",
     [EURO_SYMBOL_KEY]: "text",
+    [CSV_STYLE_KEY]: "text",
   };
 }
 

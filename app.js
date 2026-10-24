@@ -822,6 +822,18 @@ function setUpSettings() {
     renderInvoiceList();
   });
 
+  // Which kind of Excel the CSV export is made for.
+  const csvChoice = document.getElementById("csv-style");
+  csvChoice.value = csvStyle();
+  csvChoice.addEventListener("change", () => {
+    csvStyleChoice = csvChoice.value;
+    try {
+      localStorage.setItem(CSV_STYLE_KEY, csvChoice.value);
+    } catch {
+      // Not remembered after the page is closed.
+    }
+  });
+
   // Your business details are saved as you type.
   const business = loadBusiness();
   const savedNote = document.getElementById("business-saved");

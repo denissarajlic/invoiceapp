@@ -66,7 +66,12 @@ Last updated: 23 Oct 2026
 - **⬇ Export (CSV)** (Izvoz) next to the month menu downloads a file that opens in Excel or Google Sheets.
 - It contains exactly the invoices the list shows: the picked month, or all of them.
 - One row per invoice, in list order: invoice number, client, date, due date, amount without VAT, VAT, total, currency (KM or EUR) and status (paid, unpaid or overdue). The first row has the column names, in the app's language.
-- Made for Excel with Bosnian settings: `;` between columns, amounts like `1250,00` (so Excel can add them up), dates like `23.10.2026`. Č, ć, š, đ and ž come out correctly.
+- Excel reads CSV files differently depending on its language, so **Settings → Export (CSV) for** lets you pick:
+  - **English Excel:** `,` between columns, amounts like `1250.00`, dates like `2026-10-23`.
+  - **Bosnian / European Excel:** `;` between columns, amounts like `1250,00`, dates like `23.10.2026`.
+  - The first time, the app picks one based on the browser's language. You can change it, and the app remembers your choice. It's included in the backup.
+- Either way, amounts have no thousands separator, so Excel can add them up, and č, ć, š, đ and ž come out correctly.
+- If the file opens with mixed-up columns or everything in one column, pick the other choice and export again.
 - The file is named after what's in it, e.g. `invoices-2026-10.csv`, `invoices-all.csv`, or in Bosnian `fakture-2026-10.csv`, `fakture-svi.csv`.
 - A client name starting with `=`, `+`, `-` or `@` gets a `'` in front in the file, so Excel never treats it as a formula.
 - CSV and PDF files saved inside the app's folder are ignored by git, so test files don't end up in the project.
@@ -198,13 +203,14 @@ Last updated: 23 Oct 2026
   - They're saved automatically as you type. You see "✓ Saved automatically".
   - They're printed in the top-left corner of every invoice. Empty fields are left out.
   - They aren't stored in each invoice. If you change them, older invoices also show the new details when you print them again.
+- **Export (CSV) for:** English Excel or Bosnian / European Excel (see Export to CSV).
 - **Show euros as:** `1.250,00 EUR` or `1.250,00 €`. It starts as EUR.
 - Changing it updates every amount on the page straight away, including saved invoices in the list.
 - The app remembers your choice.
 
 ## Backup and import
 - **💾 Backup** (Rezervna kopija) is near the bottom of the page, between Clients and Settings.
-- **Download backup** saves one file, e.g. `invoiceapp-backup-2026-10-23.json`, with everything the app has saved: invoices, invoice numbering, clients, your business details (including the logo) and the EUR/€ setting.
+- **Download backup** saves one file, e.g. `invoiceapp-backup-2026-10-23.json`, with everything the app has saved: invoices, invoice numbering, clients, your business details (including the logo), the EUR/€ setting and the CSV setting.
 - **Import backup…** opens a backup file. The app shows the backup's date and number of invoices, and asks first. Only **OK** imports it.
 - Importing **replaces everything** on this device with what's in the file. Invoices on the device that aren't in the backup are gone afterwards. The app then reloads and shows the imported invoices.
 - A file that isn't a backup from this app is refused, and nothing is changed.
